@@ -3,15 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" 
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" 
+                       VerticalAlignment="Center"
+                       Text="会社" />
+            <ComboBox Grid.Row="0" Grid.Column="1" 
+                      SelectedIndex="0">
+                <ComboBoxItem Content="コメリ"/>
+            </ComboBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       VerticalAlignment="Center"
+                       Text="支店" />
+            <ComboBox Grid.Row="1" Grid.Column="1" >
+                <ComboBoxItem Content="札幌"/>
+                <ComboBoxItem Content="青森"/>
+                <ComboBoxItem Content="秋田"/>
+                <ComboBoxItem Content="岩手"/>
+
+            </ComboBox>
+
+        </Grid>
+        <Button Grid.Row="1" 
                 Content="登録"
                 Command="{Binding EditorCommand}"/>
+
     </Grid>
 </UserControl>

@@ -6,10 +6,10 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="White" Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="90"/>
-            <RowDefinition />
-            <RowDefinition Height="450"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="90"/>    <!-- Header -->
+            <RowDefinition />               <!-- List -->
+            <RowDefinition Height="450"/>   <!-- Detail -->
+            <RowDefinition Height="40"/>    <!-- Footer -->
         </Grid.RowDefinitions>
 
         <!--Header-->
@@ -75,9 +75,11 @@
         <!--Detail-->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="100"/>
-                <RowDefinition />
+                <RowDefinition Height="150"/>   <!-- 住所 -->
+                <RowDefinition Height="30"/>    <!-- 車両 -->
+                <RowDefinition Height="70"/>   <!-- memo -->
+                <RowDefinition Height="10"/>       <!-- 荷物 -->
+                <RowDefinition />       <!-- 荷物 -->
             </Grid.RowDefinitions>
 
             <!--住所-->
@@ -99,9 +101,17 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" 
                            VerticalAlignment="Center"
                            Text="引取" />
-                <DatePicker Grid.Row="0" Grid.Column="1"  
+                <Grid Grid.Row="0" Grid.Column="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DatePicker Grid.Column="0"  
                             Width="100" 
                             HorizontalAlignment="Left"/>
+                    <Button Grid.Column="1"
+                            Content="最後の引っ越しからコピー"/>
+                </Grid>
                 <TextBox Grid.Row="1" Grid.Column="1" 
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="氏名"/>
@@ -128,8 +138,28 @@
 
             </Grid>
 
-            <!--メモ-->
+            <!-- 車両 -->
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           VerticalAlignment="Center" 
+                           Text="車両"/>
+                <ComboBox Grid.Column="1" 
+                          HorizontalAlignment="Left"
+                          Width="100"
+                          Text="">
+                    <ComboBoxItem Content="軽貨物"/>
+                    <ComboBoxItem Content="2t"/>
+                    <ComboBoxItem Content="4t"/>
+
+                </ComboBox>
+            </Grid>
+            
+            <!--メモ-->
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition/>
@@ -139,13 +169,9 @@
                            Text="MEMO"/>
                 <TextBox Grid.Column="1" Text=""/>
             </Grid>
-
             <!--荷物-->
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -154,48 +180,51 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="75"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Text="荷物"/>
 
                 <!--荷物1列目-->
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="布団袋"/>
-                <Controls:NumericUpDown Grid.Row="1" Grid.Column="1" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="布団袋"/>
+                <Controls:NumericUpDown Grid.Row="0" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="1"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="椅子"/>
-                <Controls:NumericUpDown Grid.Row="2" Grid.Column="1" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="椅子"/>
+                <Controls:NumericUpDown Grid.Row="1" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="0"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="ソファ"/>
-                <Controls:NumericUpDown Grid.Row="3" Grid.Column="1" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="ソファ"/>
+                <Controls:NumericUpDown Grid.Row="2" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="ソファ"/>
+                <Controls:NumericUpDown Grid.Row="3" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="ソファ"/>
+                <Controls:NumericUpDown Grid.Row="4" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
                 <!--荷物2列目-->
-                <TextBlock Grid.Row="1" Grid.Column="2" Text="布団袋"/>
-                <Controls:NumericUpDown Grid.Row="1" Grid.Column="3" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="布団袋"/>
+                <Controls:NumericUpDown Grid.Row="0" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="1"/>
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="椅子"/>
-                <Controls:NumericUpDown Grid.Row="2" Grid.Column="3" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="椅子"/>
+                <Controls:NumericUpDown Grid.Row="1" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="2"/>
-                <TextBlock Grid.Row="3" Grid.Column="2" Text="ソファ"/>
-                <Controls:NumericUpDown Grid.Row="3" Grid.Column="3" 
-                                        Minimum="0" 
-                                        Maximum="100" 
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="ソファ"/>
+                <Controls:NumericUpDown Grid.Row="2" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
             </Grid>
 
@@ -209,8 +238,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" 
+                    Margin="2"
                     Command="{Binding CancelCommand}">
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Fill>
@@ -227,9 +258,12 @@
                         </DrawingBrush>
                     </Rectangle.Fill>
                 </Rectangle>
-
             </Button>
             <Button Grid.Column="1" 
+                    Margin="2"
+                    Command="{Binding DeleteCommand}"/>
+            <Button Grid.Column="2" 
+                    Margin="2"
                     Command="{Binding DocumentCommand}">
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Fill>
@@ -250,7 +284,8 @@
                 </Rectangle>
 
             </Button>
-            <Button Grid.Column="2" 
+            <Button Grid.Column="3" 
+                    Margin="2"
                     Command="{Binding RegisterCommand}">
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Fill>
@@ -269,10 +304,8 @@
                 </Rectangle>
 
             </Button>
-            <Button Grid.Column="3" 
-                    Content="削除"
-                    Command="{Binding DeleteCommand}"/>
             <Button Grid.Column="4" 
+                    Margin="2"
                     Command="{Binding PrintCommand}">
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Fill>
@@ -292,6 +325,10 @@
                 </Rectangle>
 
             </Button>
+            <Button Grid.Column="5" 
+                    Margin="2"
+                    Content="削除"
+                    Command="{Binding DeleteCommand}"/>
         </Grid>
 
     </Grid>
