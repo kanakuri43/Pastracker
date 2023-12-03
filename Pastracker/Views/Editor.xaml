@@ -110,7 +110,7 @@
                             Width="100" 
                             HorizontalAlignment="Left"/>
                     <Button Grid.Column="1"
-                            Content="最後の引っ越しからコピー"/>
+                            Content="最終引越からコピー"/>
                 </Grid>
                 <TextBox Grid.Row="1" Grid.Column="1" 
                          Controls:TextBoxHelper.ClearTextButton="true"
