@@ -18,6 +18,9 @@ namespace Pastracker.ViewModels
         private readonly IRegionManager _regionManager;
         private ObservableCollection<MoveContent> _moveContents;
         private ObservableCollection<Company> _companies;
+        private ObservableCollection<Branch> _branches;
+        private int _companyId;
+        private int _branchId;
 
         private int[] _years = new int[7];
 
@@ -36,17 +39,35 @@ namespace Pastracker.ViewModels
             get { return _companies; }
             set { SetProperty(ref _companies, value); }
         }
+        public ObservableCollection<Branch> Branches
+        {
+            get { return _branches; }
+            set { SetProperty(ref _branches, value); }
+        }
+        public int CompanyId
+        {
+            get { return _companyId; }
+            set { SetProperty(ref _companyId, value); }
+        }
+        public int BranchId
+        {
+            get { return _branchId; }
+            set { SetProperty(ref _branchId, value); }
+        }
+
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             EditorCommand = new DelegateCommand(EditorCommandExecute);
 
-
+            // 会社名
             using (var context = new AppDbContext())
             {
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
+                Branches = new ObservableCollection<Branch>(context.Branches.ToList());
             }
 
+            // 年
             for (int i = 0; i < 7; i++)
             {
                 this.Years[i] = (DateTime.Now.Year) - i;

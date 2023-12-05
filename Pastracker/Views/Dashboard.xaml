@@ -43,13 +43,13 @@
             <TextBlock Grid.Row="1" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="支店" />
-            <ComboBox Grid.Row="1" Grid.Column="1" >
-                <ComboBoxItem Content="札幌支店"/>
-                <ComboBoxItem Content="青森支店"/>
-                <ComboBoxItem Content="秋田支店"/>
-                <ComboBoxItem Content="岩手支店"/>
-            </ComboBox>
-            
+            <ComboBox Grid.Row="1" Grid.Column="1" 
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Branches}" 
+                      SelectedValue="{Binding BranchId}"/>
+
             <TextBlock Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="社員" />
