@@ -150,7 +150,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <prism:InvokeCommandAction 
-                            Command="{Binding AccountJournalsTableDoubleClick}"/>
+                            Command="{Binding MoveContentsDoubleClick}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

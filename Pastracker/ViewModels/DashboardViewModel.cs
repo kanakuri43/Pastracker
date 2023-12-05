@@ -80,6 +80,7 @@ namespace Pastracker.ViewModels
             CompanyCommand = new DelegateCommand(CompanyCommandExecute);
             BranchCommand = new DelegateCommand(BranchCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
+            MoveContentsDoubleClick = new DelegateCommand(MoveContentsDoubleClickDoubleClickExecute);
 
             using (var context = new AppDbContext())
             {
@@ -102,6 +103,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand CompanyCommand { get; }
         public DelegateCommand BranchCommand { get; }
         public DelegateCommand EmployeeCommand { get; }
+        public DelegateCommand MoveContentsDoubleClick { get; }
 
         private void EditorCommandExecute()
         {
@@ -156,6 +158,13 @@ namespace Pastracker.ViewModels
 
         }
 
+        private void MoveContentsDoubleClickDoubleClickExecute()
+        {
+            var p = new NavigationParameters();
+            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Employee);
+            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
+
+        }
 
     }
 }
