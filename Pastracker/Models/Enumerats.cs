@@ -11,6 +11,7 @@ namespace Pastracker.Models
         Company,
         Branch,
         Employee,
+        Truck,
 
     }
 }

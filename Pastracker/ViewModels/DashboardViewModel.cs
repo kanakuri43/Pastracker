@@ -107,7 +107,7 @@ namespace Pastracker.ViewModels
 
         private void EditorCommandExecute()
         {
-            // Menu表示
+            // 登録画面表示
             var p = new NavigationParameters();
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
 
@@ -161,8 +161,8 @@ namespace Pastracker.ViewModels
         private void MoveContentsDoubleClickDoubleClickExecute()
         {
             var p = new NavigationParameters();
-            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Employee);
-            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
+            p.Add(nameof(EditorViewModel.CurrentMoveContentId), 1);
+            _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
 
         }
 

@@ -17,7 +17,7 @@ using System.Collections.ObjectModel;
 
 namespace Pastracker.ViewModels
 {
-    public class EditorViewModel : BindableBase
+    public class EditorViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager _regionManager;
         private ObservableCollection<Company> _companies;
@@ -26,6 +26,7 @@ namespace Pastracker.ViewModels
         private int _companyId;
         private int _branchId;
         private int _employeeId;
+        private int _currentMoveContentId;
         private int[] _years = new int[7];
 
         public int[] Years
@@ -62,6 +63,11 @@ namespace Pastracker.ViewModels
         {
             get { return _employeeId; }
             set { SetProperty(ref _employeeId, value); }
+        }
+        public int CurrentMoveContentId
+        {
+            get { return _currentMoveContentId; }
+            set { SetProperty(ref _currentMoveContentId, value); }
         }
 
         public EditorViewModel(IRegionManager regionManager)
@@ -134,5 +140,27 @@ namespace Pastracker.ViewModels
 
         }
 
+        private void ShowMoveContentDetail(int MoveContentId)
+        {
+
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            // TODO
+            // MoveContentIdを受け取った時の処理
+            this.CurrentMoveContentId = navigationContext.Parameters.GetValue<int>(nameof(CurrentMoveContentId));
+            PrintCommandExecute();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
     }
 }
