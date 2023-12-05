@@ -33,9 +33,12 @@
                        VerticalAlignment="Center"
                        Text="会社" />
             <ComboBox Grid.Row="0" Grid.Column="1" 
-                      SelectedIndex="0">
-                <ComboBoxItem Content="コメリ"/>
-            </ComboBox>
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Companies}" 
+                      SelectedValue="{Binding CompanyId}"/>
+
             
             <TextBlock Grid.Row="1" Grid.Column="0" 
                        VerticalAlignment="Center"

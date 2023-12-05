@@ -1,4 +1,5 @@
-﻿using Pastracker.Models;
+﻿using Microsoft.Identity.Client;
+using Pastracker.Models;
 using Pastracker.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Principal;
 
 
 namespace Pastracker.ViewModels
@@ -15,6 +17,7 @@ namespace Pastracker.ViewModels
 	{
         private readonly IRegionManager _regionManager;
         private ObservableCollection<MoveContent> _moveContents;
+        private ObservableCollection<Company> _companies;
 
         private int[] _years = new int[7];
 
@@ -28,11 +31,21 @@ namespace Pastracker.ViewModels
             get { return _moveContents; }
             set { SetProperty(ref _moveContents, value); }
         }
-
+        public ObservableCollection<Company> Companies
+        {
+            get { return _companies; }
+            set { SetProperty(ref _companies, value); }
+        }
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             EditorCommand = new DelegateCommand(EditorCommandExecute);
+
+
+            using (var context = new AppDbContext())
+            {
+                Companies = new ObservableCollection<Company>(context.Companies.ToList());
+            }
 
             for (int i = 0; i < 7; i++)
             {
