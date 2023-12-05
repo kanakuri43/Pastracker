@@ -81,12 +81,14 @@ namespace Pastracker.ViewModels
             BranchCommand = new DelegateCommand(BranchCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
 
-            // ComboBox
             using (var context = new AppDbContext())
             {
+                // ComboBox
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
                 Branches = new ObservableCollection<Branch>(context.Branches.ToList());
                 Employees = new ObservableCollection<Employee>(context.Employees.ToList());
+
+                MoveContents = new ObservableCollection<MoveContent>(context.MoveContents.ToList());
             }
 
             // 年

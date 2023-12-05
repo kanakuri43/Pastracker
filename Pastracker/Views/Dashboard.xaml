@@ -124,16 +124,18 @@
                   SelectedValue="{Binding MoveContentId}" >
             
             <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
+                <Style TargetType="ListViewItem"
+                       BasedOn="{StaticResource MahApps.Styles.ListViewItem}" >
+
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Date" Width="100" DisplayMemberBinding="{Binding JournalDate, StringFormat={}{0:yyyy/MM/dd}}" />
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Description}" />
-                    <GridViewColumn Header="From" Width="100" DisplayMemberBinding="{Binding DebitAccountName}" />
-                    <GridViewColumn Header="To" Width="100" DisplayMemberBinding="{Binding CreditAccountName}" />
+                    <GridViewColumn Header="Date" Width="100" DisplayMemberBinding="{Binding PickupDate, StringFormat={}{0:yyyy/MM/dd}}" />
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding PickupName}" />
+                    <GridViewColumn Header="From" Width="100" DisplayMemberBinding="{Binding PickupAddress1}" />
+                    <GridViewColumn Header="To" Width="100" DisplayMemberBinding="{Binding DeliveryAddress1}" />
                     <GridViewColumn Header="Truck" Width="100"  >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
