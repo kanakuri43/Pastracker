@@ -19,6 +19,13 @@ namespace Pastracker.ViewModels
     public class EditorViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
+        private int[] _years = new int[7];
+
+        public int[] Years
+        {
+            get { return _years; }
+            set { SetProperty(ref _years, value); }
+        }
 
         public EditorViewModel(IRegionManager regionManager)
         {
@@ -29,6 +36,10 @@ namespace Pastracker.ViewModels
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
             DocumentCommand = new DelegateCommand(DocumentCommandExecute);
 
+            for (int i = 0; i < 7; i++)
+            {
+                this.Years[i] = (DateTime.Now.Year) - i;
+            }
         }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand CompanyCommand { get; }
@@ -73,40 +84,6 @@ namespace Pastracker.ViewModels
 
         private void PrintCommandExecute()
         {
-            MovingContents reportPaper = new MovingContents();
-            FixedPage fixedPage = new FixedPage();
-            fixedPage.Children.Add(reportPaper);
-
-            // A4縦
-            fixedPage.Width = 8.27 * 96;
-            fixedPage.Height = 11.69 * 96;
-            PageContent pc = new PageContent();
-            ((IAddChild)pc).AddChild(fixedPage);
-            FixedDocument fixedDocument = new FixedDocument();
-            fixedDocument.Pages.Add(pc);
-
-            string outputDirectory = System.AppDomain.CurrentDomain.BaseDirectory + "pdf";
-            string xpsFileName = @"abc.xps";
-            string pdfFileName = @"abc.pdf";
-            using (Package p = Package.Open(xpsFileName, FileMode.Create))
-            {
-                using (XpsDocument d = new XpsDocument(p))
-                {
-                    XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(d);
-                    writer.Write(fixedDocument.DocumentPaginator);
-                }
-            }
-
-            PdfSharp.Xps.XpsConverter.Convert(xpsFileName, pdfFileName, 0);
-            File.Delete(xpsFileName);
-
-            // 関連付けされたソフトで開く
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = pdfFileName,
-                UseShellExecute = true
-            };
-            Process.Start(psi);
 
         }
 

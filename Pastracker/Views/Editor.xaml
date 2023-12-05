@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+Width="1000" 
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid Background="White" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>    <!-- Header -->
             <RowDefinition Height="10"/>    <!-- spacer -->
             <RowDefinition Height="450"/>   <!-- Detail -->
-            <RowDefinition Height="40"/>    <!-- Footer -->
+            <RowDefinition />            <!-- Footer -->
+            <RowDefinition Height="40"/>            <!-- Footer -->
         </Grid.RowDefinitions>
 
         <!--Header-->
@@ -22,7 +24,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" 
@@ -54,11 +56,20 @@
                 <ComboBoxItem Content="遠藤"/>
             </ComboBox>
 
-            <Button Grid.Row="0" Grid.Column="2" Content="..."
+            <Button Grid.Row="0" Grid.Column="2" 
+                    Width="30"
+                    HorizontalAlignment="Left"
+                    Content="..."
                     Command="{Binding CompanyCommand}"/>
-            <Button Grid.Row="1" Grid.Column="2" Content="..."
+            <Button Grid.Row="1" Grid.Column="2" 
+                    Width="30"
+                    HorizontalAlignment="Left"
+                    Content="..."
                     Command="{Binding BranchCommand}"/>
-            <Button Grid.Row="2" Grid.Column="2" Content="..."
+            <Button Grid.Row="2" Grid.Column="2" 
+                    Width="30"
+                    HorizontalAlignment="Left"
+                    Content="..."
                     Command="{Binding EmployeeCommand}"/>
 
         </Grid>
@@ -69,16 +80,16 @@
         <!--Detail-->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>   <!-- 住所 -->
-                <RowDefinition Height="30"/>    <!-- 車両 -->
+                <RowDefinition Height="200"/>   <!-- 住所 -->
                 <RowDefinition Height="70"/>   <!-- memo -->
                 <RowDefinition Height="10"/>       <!-- 荷物 -->
-                <RowDefinition />       <!-- 荷物 -->
+                <RowDefinition />       
             </Grid.RowDefinitions>
 
             <!--住所-->
             <Grid Grid.Row="0" >
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -110,6 +121,16 @@
                 <TextBox Grid.Row="4" Grid.Column="1"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="番地など"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" 
+                           VerticalAlignment="Center"
+                           Text="車両" />
+                <ComboBox Grid.Row="5" Grid.Column="1"
+                          HorizontalAlignment="Left"
+                          Width="100">
+                    <ComboBoxItem Content="軽"/>
+                    <ComboBoxItem Content="2t"/>
+
+                </ComboBox> 
 
                 <TextBlock Grid.Row="0" Grid.Column="3" 
                            VerticalAlignment="Center"
@@ -121,31 +142,23 @@
                 <TextBox Grid.Row="2" Grid.Column="4"/>
                 <TextBox Grid.Row="3" Grid.Column="4"/>
                 <TextBox Grid.Row="4" Grid.Column="4"/>
-
-            </Grid>
-
-            <!-- 車両 -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" 
-                           VerticalAlignment="Center" 
-                           Text="車両"/>
-                <ComboBox Grid.Column="1" 
+                <TextBlock Grid.Row="5" Grid.Column="3" 
+                           VerticalAlignment="Center"
+                           Text="支店" />
+                <ComboBox Grid.Row="5" Grid.Column="4"
                           HorizontalAlignment="Left"
-                          Width="100"
-                          Text="">
-                    <ComboBoxItem Content="軽貨物"/>
+                          Width="100">
+                    <ComboBoxItem Content="軽"/>
                     <ComboBoxItem Content="2t"/>
-                    <ComboBoxItem Content="4t"/>
 
                 </ComboBox>
+
             </Grid>
+
+
             
             <!--メモ-->
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition/>
@@ -156,7 +169,7 @@
                 <TextBox Grid.Column="1" Text=""/>
             </Grid>
             <!--荷物-->
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -217,8 +230,9 @@
         </Grid>
 
         <!--Footer-->
-        <Grid Grid.Row="3" >
+        <Grid Grid.Row="4" >
             <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -229,21 +243,27 @@
             <Button Grid.Column="0" 
                     Margin="2"
                     Command="{Binding CancelCommand}">
-                <Rectangle Width="16" Height="16">
-                    <Rectangle.Fill>
-                        <DrawingBrush>
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup.Children>
-                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M15.957,5.5C15.957,8.533,13.489,11,10.457,11L5.328,11 7.975,13.646 5.854,15.768 0,9.914 0,9.086 5.854,3.232 7.975,5.354 5.328,8 10.457,8C11.836,8 12.957,6.878 12.957,5.5 12.957,4.122 11.836,3 10.457,3L9,3 9,0 10.457,0C13.489,0,15.957,2.467,15.957,5.5" />
-                                        <GeometryDrawing Brush="#FF00529C" Geometry="F1M5.8535,4.6465L6.5605,5.3535 2.9145,9.0005 10.4575,9.0005C12.3865,9.0005 13.9575,7.4295 13.9575,5.5005 13.9575,3.5705 12.3865,2.0005 10.4575,2.0005L10.4575,1.0005C12.9385,1.0005 14.9575,3.0185 14.9575,5.5005 14.9575,7.9815 12.9385,10.0005 10.4575,10.0005L2.9145,10.0005 6.5605,13.6465 5.8535,14.3535 0.9995,9.5005z" />
-                                    </DrawingGroup.Children>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M15.957,5.5C15.957,8.533,13.489,11,10.457,11L5.328,11 7.975,13.646 5.854,15.768 0,9.914 0,9.086 5.854,3.232 7.975,5.354 5.328,8 10.457,8C11.836,8 12.957,6.878 12.957,5.5 12.957,4.122 11.836,3 10.457,3L9,3 9,0 10.457,0C13.489,0,15.957,2.467,15.957,5.5" />
+                                            <GeometryDrawing Brush="#FF00529C" Geometry="F1M5.8535,4.6465L6.5605,5.3535 2.9145,9.0005 10.4575,9.0005C12.3865,9.0005 13.9575,7.4295 13.9575,5.5005 13.9575,3.5705 12.3865,2.0005 10.4575,2.0005L10.4575,1.0005C12.9385,1.0005 14.9575,3.0185 14.9575,5.5005 14.9575,7.9815 12.9385,10.0005 10.4575,10.0005L2.9145,10.0005 6.5605,13.6465 5.8535,14.3535 0.9995,9.5005z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="戻る"
+                               FontSize="12"
+                               Margin="4"/>
+
+                </StackPanel>
             </Button>
             <Button Grid.Column="1" 
                     Margin="2"
@@ -273,48 +293,90 @@
             <Button Grid.Column="3" 
                     Margin="2"
                     Command="{Binding RegisterCommand}">
-                <Rectangle Width="16" Height="16">
-                    <Rectangle.Fill>
-                        <DrawingBrush>
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup.Children>
-                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6.0003,9.1717L2.7073,5.8787 0.000300000000000189,8.5857 0.000300000000000189,8.8277 6.0003,14.8277 16.0003,4.8287 16.0003,4.5857 13.2933,1.8787z" />
-                                        <GeometryDrawing Brush="#FF388A34" Geometry="F1M14.707,4.707L6,13.414 1.293,8.707 2.707,7.293 6,10.586 13.293,3.293z" />
-                                    </DrawingGroup.Children>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6.0003,9.1717L2.7073,5.8787 0.000300000000000189,8.5857 0.000300000000000189,8.8277 6.0003,14.8277 16.0003,4.8287 16.0003,4.5857 13.2933,1.8787z" />
+                                            <GeometryDrawing Brush="#FF388A34" Geometry="F1M14.707,4.707L6,13.414 1.293,8.707 2.707,7.293 6,10.586 13.293,3.293z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="登録"
+                               FontSize="12"
+                               Margin="4"/>
+                </StackPanel>
+
 
             </Button>
             <Button Grid.Column="4" 
                     Margin="2"
                     Command="{Binding PrintCommand}">
-                <Rectangle Width="16" Height="16">
-                    <Rectangle.Fill>
-                        <DrawingBrush>
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup.Children>
-                                        <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M15.2686,6.73C14.7906,6.252,14.1786,6,13.4996,6L12.9996,6 12.9996,0 2.9996,0 2.9996,6 2.4996,6C1.8206,6 1.2076,6.252 0.730599999999999,6.73 0.252599999999999,7.208 -0.000400000000000844,7.82 -0.000400000000000844,8.5L-0.000400000000000844,14 2.9996,14 2.9996,16 12.9996,16 12.9996,14 15.9996,14 15.9996,8.5C15.9996,7.822,15.7476,7.21,15.2686,6.73" />
-                                        <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M5,14L11,14 11,12 5,12z M11,2L5,2 5,7 11,7z M14,8.5L14,12 12,12 12,11 4,11 4,12 2,12 2,8.5C2,8.354 2.047,8.234 2.141,8.141 2.234,8.047 2.354,8 2.5,8L13.5,8C13.646,8 13.766,8.047 13.859,8.141 13.953,8.234 14,8.354 14,8.5" />
-                                        <GeometryDrawing Brush="#FF424242" Geometry="F1M11,12L5,12 5,14 11,14z M5,7L11,7 11,2 5,2z M3,10L4,10 4,9 3,9z M14,8.5C14,8.354 13.953,8.234 13.859,8.141 13.766,8.047 13.646,8 13.5,8L2.5,8C2.354,8 2.234,8.047 2.141,8.141 2.047,8.234 2,8.354 2,8.5L2,12 4,12 4,11 12,11 12,12 14,12z M15,13L12,13 12,15 4,15 4,13 1,13 1,8.5C1,8.083 1.146,7.729 1.437,7.437 1.729,7.146 2.083,7 2.5,7L4,7 4,1 12,1 12,7 13.5,7C13.916,7 14.271,7.146 14.563,7.437 14.854,7.729 15,8.083 15,8.5z" />
-                                    </DrawingGroup.Children>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M15.2686,6.73C14.7906,6.252,14.1786,6,13.4996,6L12.9996,6 12.9996,0 2.9996,0 2.9996,6 2.4996,6C1.8206,6 1.2076,6.252 0.730599999999999,6.73 0.252599999999999,7.208 -0.000400000000000844,7.82 -0.000400000000000844,8.5L-0.000400000000000844,14 2.9996,14 2.9996,16 12.9996,16 12.9996,14 15.9996,14 15.9996,8.5C15.9996,7.822,15.7476,7.21,15.2686,6.73" />
+                                            <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M5,14L11,14 11,12 5,12z M11,2L5,2 5,7 11,7z M14,8.5L14,12 12,12 12,11 4,11 4,12 2,12 2,8.5C2,8.354 2.047,8.234 2.141,8.141 2.234,8.047 2.354,8 2.5,8L13.5,8C13.646,8 13.766,8.047 13.859,8.141 13.953,8.234 14,8.354 14,8.5" />
+                                            <GeometryDrawing Brush="#FF424242" Geometry="F1M11,12L5,12 5,14 11,14z M5,7L11,7 11,2 5,2z M3,10L4,10 4,9 3,9z M14,8.5C14,8.354 13.953,8.234 13.859,8.141 13.766,8.047 13.646,8 13.5,8L2.5,8C2.354,8 2.234,8.047 2.141,8.141 2.047,8.234 2,8.354 2,8.5L2,12 4,12 4,11 12,11 12,12 14,12z M15,13L12,13 12,15 4,15 4,13 1,13 1,8.5C1,8.083 1.146,7.729 1.437,7.437 1.729,7.146 2.083,7 2.5,7L4,7 4,1 12,1 12,7 13.5,7C13.916,7 14.271,7.146 14.563,7.437 14.854,7.729 15,8.083 15,8.5z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="印刷"
+                               FontSize="12"
+                               Margin="4"/>
+
+                </StackPanel>
 
             </Button>
             <Button Grid.Column="5" 
+                    Margin="2">
+
+            </Button>
+            <Button Grid.Column="6" 
                     Margin="2"
-                    Content="削除"
-                    Command="{Binding DeleteCommand}"/>
+                    IsEnabled="False"
+                    Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <DrawingBrush>
+                                <DrawingBrush.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M4,16C2.897,16,2,15.103,2,14L2,5 1,5 1,2 4,2C4,0.897,4.897,0,6,0L9,0C10.103,0,11,0.897,11,2L14,2 14,5 13,5 13,14C13,15.103,12.103,16,11,16z" />
+                                            <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M10,12L9,12 9,6 10,6z M8,12L7,12 7,6 8,6z M6,12L5,12 5,6 6,6z M4,14L11,14 11,4 4,4z" />
+                                            <GeometryDrawing Brush="#FF424242" Geometry="F1M11,4L4,4 4,14 11,14z M6,3L9,3 9,2 6,2z M13,3L13,4 12,4 12,14C12,14.552,11.552,15,11,15L4,15C3.448,15,3,14.552,3,14L3,4 2,4 2,3 5,3 5,2C5,1.448,5.448,1,6,1L9,1C9.552,1,10,1.448,10,2L10,3z M10,6L9,6 9,12 10,12z M8,6L7,6 7,12 8,12z M6,12L5,12 5,6 6,6z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="削除"
+                               FontSize="12"
+                               Margin="4"/>
+                </StackPanel>
+
+            </Button>
         </Grid>
 
     </Grid>
