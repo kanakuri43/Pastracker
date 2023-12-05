@@ -53,12 +53,13 @@
             <TextBlock Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="社員" />
-            <ComboBox Grid.Row="2" Grid.Column="1">
-                <ComboBoxItem Content="阿部寛"/>
-                <ComboBoxItem Content="伊藤英明"/>
-                <ComboBoxItem Content="上野樹里"/>
-                <ComboBoxItem Content="遠藤憲一"/>
-            </ComboBox>
+            <ComboBox Grid.Row="2" Grid.Column="1" 
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Employees}" 
+                      SelectedValue="{Binding EmployeeId}"/>
+
 
             <TextBlock Grid.Row="3" Grid.Column="0" 
                        VerticalAlignment="Center"
@@ -117,7 +118,11 @@
         </Grid>
 
         <!-- List -->
-        <ListView Grid.Row="2">
+        <ListView Grid.Row="2"                     
+                  SelectedValuePath="Id"
+                  ItemsSource="{Binding MoveContents}" 
+                  SelectedValue="{Binding MoveContentId}" >
+            
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

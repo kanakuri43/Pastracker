@@ -19,8 +19,11 @@ namespace Pastracker.ViewModels
         private ObservableCollection<MoveContent> _moveContents;
         private ObservableCollection<Company> _companies;
         private ObservableCollection<Branch> _branches;
+        private ObservableCollection<Employee> _employees;
+        private int _moveContentId;
         private int _companyId;
         private int _branchId;
+        private int _employeeId;
 
         private int[] _years = new int[7];
 
@@ -44,6 +47,16 @@ namespace Pastracker.ViewModels
             get { return _branches; }
             set { SetProperty(ref _branches, value); }
         }
+        public ObservableCollection<Employee> Employees
+        {
+            get { return _employees; }
+            set { SetProperty(ref _employees, value); }
+        }
+        public int MoveContentId
+        {
+            get { return _moveContentId; }
+            set { SetProperty(ref _moveContentId, value); }
+        }
         public int CompanyId
         {
             get { return _companyId; }
@@ -54,17 +67,26 @@ namespace Pastracker.ViewModels
             get { return _branchId; }
             set { SetProperty(ref _branchId, value); }
         }
+        public int EmployeeId
+        {
+            get { return _employeeId; }
+            set { SetProperty(ref _employeeId, value); }
+        }
 
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             EditorCommand = new DelegateCommand(EditorCommandExecute);
+            CompanyCommand = new DelegateCommand(CompanyCommandExecute);
+            BranchCommand = new DelegateCommand(BranchCommandExecute);
+            EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
 
-            // 会社名
+            // ComboBox
             using (var context = new AppDbContext())
             {
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
                 Branches = new ObservableCollection<Branch>(context.Branches.ToList());
+                Employees = new ObservableCollection<Employee>(context.Employees.ToList());
             }
 
             // 年
@@ -75,12 +97,38 @@ namespace Pastracker.ViewModels
 
         }
         public DelegateCommand EditorCommand { get; }
+        public DelegateCommand CompanyCommand { get; }
+        public DelegateCommand BranchCommand { get; }
+        public DelegateCommand EmployeeCommand { get; }
 
         private void EditorCommandExecute()
         {
             // Menu表示
             var p = new NavigationParameters();
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
+
+        }
+        private void CompanyCommandExecute()
+        {
+            var p = new NavigationParameters();
+            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Company);
+            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
+
+        }
+
+        private void BranchCommandExecute()
+        {
+            var p = new NavigationParameters();
+            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Branch);
+            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
+
+        }
+
+        private void EmployeeCommandExecute()
+        {
+            var p = new NavigationParameters();
+            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Employee);
+            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
 
         }
 
@@ -90,14 +138,14 @@ namespace Pastracker.ViewModels
             {
                 var selectedItem = selectedItems[0];
                 var year = selectedItem;
-                ShowAccountJournalsTable((int)year);
+                ShowContentDetails((int)year);
             }
             catch
             {
 
             }
         }
-        private void ShowAccountJournalsTable(int year)
+        private void ShowContentDetails(int year)
         {
             using var context = new AppDbContext();
             this.MoveContents = new ObservableCollection<MoveContent>(context.MoveContents

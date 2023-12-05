@@ -30,31 +30,35 @@ Width="1000"
             <TextBlock Grid.Row="0" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="会社" />
+            <TextBlock Grid.Row="0" Grid.Column="1" 
+                       VerticalAlignment="Center"
+                       Text="会社" />
             <ComboBox Grid.Row="0" Grid.Column="1" 
-                      SelectedIndex="0">
-                <ComboBoxItem Content="コメリ"/>
-            </ComboBox>
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Companies}" 
+                      SelectedValue="{Binding CompanyId}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="支店" />
-            <ComboBox Grid.Row="1" Grid.Column="1" >
-                <ComboBoxItem Content="札幌"/>
-                <ComboBoxItem Content="青森"/>
-                <ComboBoxItem Content="秋田"/>
-                <ComboBoxItem Content="岩手"/>
-
-            </ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" 
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Branches}" 
+                      SelectedValue="{Binding BranchId}"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="社員" />
-            <ComboBox Grid.Row="2" Grid.Column="1">
-                <ComboBoxItem Content="阿部"/>
-                <ComboBoxItem Content="伊藤"/>
-                <ComboBoxItem Content="上野"/>
-                <ComboBoxItem Content="遠藤"/>
-            </ComboBox>
+            <ComboBox Grid.Row="2" Grid.Column="1" 
+                      SelectedIndex="0"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      ItemsSource="{Binding Employees}" 
+                      SelectedValue="{Binding EmployeeId}"/>
 
             <Button Grid.Row="0" Grid.Column="2" 
                     Width="30"

@@ -12,6 +12,7 @@ namespace Pastracker.Models
     {
         public DbSet<Company> Companies { get; set; }
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<MoveContent> MoveContents { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
