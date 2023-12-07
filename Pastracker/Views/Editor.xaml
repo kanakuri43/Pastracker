@@ -111,18 +111,23 @@ Width="1000"
                            VerticalAlignment="Center"
                            Text="引取" />
                 <DatePicker Grid.Row="0" Grid.Column="1"  
+                            SelectedDate="{Binding PickupDate}"
                             Width="100" 
                             HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="1" Grid.Column="1" 
+                         Text="{Binding PickupName}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="氏名"/>
                 <TextBox Grid.Row="2" Grid.Column="1" 
+                         Text="{Binding PickupTel}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="TEL"/>
                 <TextBox Grid.Row="3" Grid.Column="1"
+                         Text="{Binding PickupAddress1}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="住所"/>
                 <TextBox Grid.Row="4" Grid.Column="1"
+                         Text="{Binding PickupAddress2}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="番地など"/>
                 <TextBlock Grid.Row="5" Grid.Column="0" 
@@ -140,23 +145,35 @@ Width="1000"
                            VerticalAlignment="Center"
                            Text="納入" />
                 <DatePicker Grid.Row="0" Grid.Column="4" 
+                            SelectedDate="{Binding DeliveryDate}"
                             Width="100"
                             HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="1" Grid.Column="4"/>
-                <TextBox Grid.Row="2" Grid.Column="4"/>
-                <TextBox Grid.Row="3" Grid.Column="4"/>
-                <TextBox Grid.Row="4" Grid.Column="4"/>
+                <TextBox Grid.Row="1" Grid.Column="4"
+                         Text="{Binding DeliveryName}"
+                         Controls:TextBoxHelper.ClearTextButton="true"
+                         Controls:TextBoxHelper.Watermark="氏名"/>
+                <TextBox Grid.Row="2" Grid.Column="4"
+                         Text="{Binding DeliveryTel}"
+                         Controls:TextBoxHelper.ClearTextButton="true"
+                         Controls:TextBoxHelper.Watermark="TEL"/>
+                <TextBox Grid.Row="3" Grid.Column="4"
+                         Text="{Binding DeliveryAddress1}"
+                         Controls:TextBoxHelper.ClearTextButton="true"
+                         Controls:TextBoxHelper.Watermark="住所"/>
+                <TextBox Grid.Row="4" Grid.Column="4"
+                         Text="{Binding DeliveryAddress2}"
+                         Controls:TextBoxHelper.ClearTextButton="true"
+                         Controls:TextBoxHelper.Watermark="番地など"/>
                 <TextBlock Grid.Row="5" Grid.Column="3" 
                            VerticalAlignment="Center"
                            Text="支店" />
                 <ComboBox Grid.Row="5" Grid.Column="4"
                           HorizontalAlignment="Left"
-                          Width="100">
-                    <ComboBoxItem Content="軽"/>
-                    <ComboBoxItem Content="2t"/>
-
-                </ComboBox>
-
+                          Width="100"
+                          SelectedValuePath="Id"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Branches}" 
+                          SelectedValue="{Binding DestinationBranchId}"/>
             </Grid>
 
 

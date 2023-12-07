@@ -25,9 +25,9 @@ namespace Pastracker.ViewModels
         private int _branchId;
         private int _employeeId;
 
-        private int[] _years = new int[7];
+        private int?[] _years = new int?[7];
 
-        public int[] Years
+        public int?[] Years
         {
             get { return _years; }
             set { SetProperty(ref _years, value); }
@@ -93,9 +93,10 @@ namespace Pastracker.ViewModels
             }
 
             // 年
-            for (int i = 0; i < 7; i++)
+            this.Years[0] = null;
+            for (int i = 1; i < 7; i++)
             {
-                this.Years[i] = (DateTime.Now.Year) - i;
+                this.Years[i] = (DateTime.Now.Year) - i + 1;
             }
 
         }
@@ -161,7 +162,7 @@ namespace Pastracker.ViewModels
         private void MoveContentsDoubleClickDoubleClickExecute()
         {
             var p = new NavigationParameters();
-            p.Add(nameof(EditorViewModel.CurrentMoveContentId), 1);
+            p.Add(nameof(EditorViewModel.CurrentMoveContentId), MoveContentId);
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
 
         }

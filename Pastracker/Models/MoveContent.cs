@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pastracker.Models
 {
-    [Table("move_content")]
+    [Table("move_contents")]
     public class MoveContent
     {
         public int Id { get; set; }
