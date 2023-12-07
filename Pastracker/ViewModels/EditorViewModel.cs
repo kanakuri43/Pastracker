@@ -143,6 +143,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand EmployeeCommand { get; }
         public DelegateCommand DocumentCommand { get; }
         public DelegateCommand RegisterCommand { get; }
+        public DelegateCommand PrintCommand { get; }
 
         public EditorViewModel(IRegionManager regionManager)
         {
@@ -153,6 +154,7 @@ namespace Pastracker.ViewModels
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
             DocumentCommand = new DelegateCommand(DocumentCommandExecute);
             RegisterCommand = new DelegateCommand(RegisterCommandExecute);
+            PrintCommand = new DelegateCommand(PrintCommandExecute);
 
             // ComboBox
             using (var context = new AppDbContext())
@@ -261,13 +263,45 @@ namespace Pastracker.ViewModels
                     }
                 }
             }
-            //InitializeScreen();
-            //ShowAccountJournalsTable(this.SelectedYear);
+            InitializeScreen();
         }
 
         private void PrintCommandExecute()
         {
+            ContentPaper contentPaper = new ContentPaper();
+            FixedPage fixedPage = new FixedPage();
+            fixedPage.Children.Add(contentPaper);
 
+            // A4縦
+            fixedPage.Width = 8.27 * 96;
+            fixedPage.Height = 11.69 * 96;
+            PageContent pc = new PageContent();
+            ((IAddChild)pc).AddChild(fixedPage);
+            FixedDocument fixedDocument = new FixedDocument();
+            fixedDocument.Pages.Add(pc);
+
+            string outputDirectory = System.AppDomain.CurrentDomain.BaseDirectory + "pdf";
+            string xpsFileName = @"aaa.xps"; // string.Format(outputDirectory + @"\{0}.xps", SelectedDate.ToString("yyyyMMdd"));
+            string pdfFileName = @"aaa.pdf"; // string.Format(outputDirectory + @"\{0}.pdf", SelectedDate.ToString("yyyyMMdd"));
+            using (Package p = Package.Open(xpsFileName, FileMode.Create))
+            {
+                using (XpsDocument d = new XpsDocument(p))
+                {
+                    XpsDocumentWriter writer = XpsDocument.CreateXpsDocumentWriter(d);
+                    writer.Write(fixedDocument.DocumentPaginator);
+                }
+            }
+
+            PdfSharp.Xps.XpsConverter.Convert(xpsFileName, pdfFileName, 0);
+            File.Delete(xpsFileName);
+
+            // 関連付けされたソフトで開く
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = pdfFileName,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
 
         private void ShowMoveContentDetail(int MoveContentId)
