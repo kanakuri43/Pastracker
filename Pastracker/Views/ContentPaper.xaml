@@ -3,7 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-            
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White" Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/> <!-- Title -->
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="330"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="作業指示書"
+                   FontSize="20"/>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="引取先"/>
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="2023/10/20 10:00"/>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="阿部寛"/>
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="090-9999-8888"/>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="北海道札幌市"/>
+            <TextBlock Grid.Row="4" Grid.Column="1"
+                       Text="１２３"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0"
+                       Text="納入先"/>
+            <TextBlock Grid.Row="6" Grid.Column="1"
+                       Text="2023/10/20 10:00"/>
+            <TextBlock Grid.Row="7" Grid.Column="1"
+                       Text="阿部寛"/>
+            <TextBlock Grid.Row="8" Grid.Column="1"
+                       Text="090-9999-8888"/>
+            <TextBlock Grid.Row="9" Grid.Column="1"
+                       Text="青森県弘前市"/>
+            <TextBlock Grid.Row="10" Grid.Column="1"
+                       Text="７８９"/>
+
+        </Grid>
     </Grid>
 </UserControl>
