@@ -141,7 +141,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand CompanyCommand { get; }
         public DelegateCommand BranchCommand { get; }
         public DelegateCommand EmployeeCommand { get; }
-        public DelegateCommand DocumentCommand { get; }
+        public DelegateCommand AttachmentCommand { get; }
         public DelegateCommand RegisterCommand { get; }
         public DelegateCommand PrintCommand { get; }
 
@@ -152,7 +152,7 @@ namespace Pastracker.ViewModels
             CompanyCommand = new DelegateCommand(CompanyCommandExecute);
             BranchCommand = new DelegateCommand(BranchCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
-            DocumentCommand = new DelegateCommand(DocumentCommandExecute);
+            AttachmentCommand = new DelegateCommand(AttachmentCommandExecute);
             RegisterCommand = new DelegateCommand(RegisterCommandExecute);
             PrintCommand = new DelegateCommand(PrintCommandExecute);
 
@@ -209,9 +209,14 @@ namespace Pastracker.ViewModels
             _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
 
         }
-        private void DocumentCommandExecute()
+        private void AttachmentCommandExecute()
         {
-            Process.Start("explorer.exe", System.AppDomain.CurrentDomain.BaseDirectory);
+            var path = $"{System.AppDomain.CurrentDomain.BaseDirectory}attachment\\{this.EmployeeId}";
+            if (Directory.Exists(path) == false)
+            {
+                Directory.CreateDirectory(path);
+            }
+            Process.Start("explorer.exe", path);
         }
 
         private void RegisterCommandExecute()
@@ -306,8 +311,19 @@ namespace Pastracker.ViewModels
 
         private void ShowMoveContentDetail(int MoveContentId)
         {
-           
-
+            this.CompanyId = 1;
+            this.BranchId = 1;
+            this.EmployeeId = 1;
+            this.PickupDate = DateTime.Now;
+            this.PickupName = "遠藤憲一";
+            this.PickupTel = "0234-56-7890";
+            this.PickupAddress1 = "山形県酒田市";
+            this.PickupAddress2 = "京田１－９－１";
+            this.DeliveryDate = DateTime.Now;
+            this.DeliveryName = "遠藤憲一";
+            this.DeliveryTel = "0235-56-7890";
+            this.DeliveryAddress1 = "山形県鶴岡市";
+            this.DeliveryAddress2 = "本町１－９－１";
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

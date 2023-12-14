@@ -1,4 +1,5 @@
-﻿using Pastracker.Models;
+﻿using Microsoft.Data.SqlClient;
+using Pastracker.Models;
 using Pastracker.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -21,7 +22,9 @@ namespace Pastracker.ViewModels
 
         public DelegateCommand MouseDoubleClickCommand { get; }
         public DelegateCommand AddCommand { get; }
+        public DelegateCommand EditCommand { get; }
         public DelegateCommand CancelCommand { get; }
+        private ObservableCollection<Employee> _employees;
 
 
         public ObservableCollection<ComboBoxViewModel> FlexMastertList
@@ -44,15 +47,27 @@ namespace Pastracker.ViewModels
             get { return _masterName; }
             set { SetProperty(ref _masterName, value); }
         }
+        public ObservableCollection<Employee> Employees
+        {
+            get { return _employees; }
+            set { SetProperty(ref _employees, value); }
+        }
 
         public MasterListViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
+            AddCommand = new DelegateCommand(AddCommandExecute);
+            EditCommand = new DelegateCommand(EditCommanddExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
         }
 
         private void ShowMasterList()
         {
+            SqlDataReader dr;
+
+            FlexMastertList.Clear();
+
+
             switch (CurrentMasterType)
             {
                 case (int)MasterType.Company:
@@ -63,6 +78,13 @@ namespace Pastracker.ViewModels
                     break;
                 case (int)MasterType.Employee:
                     CurrentMasterName = @"社員";
+                    using (var context = new AppDbContext())
+                    {
+                        Employees = new ObservableCollection<Employee>(context.Employees.ToList());
+
+                        FlexMastertList = new ObservableCollection<ComboBoxViewModel>(
+                                Employees.Select(e => new ComboBoxViewModel(e.Id, e.Name)));
+                    }
                     break; 
                 default:
                     break;
@@ -71,7 +93,34 @@ namespace Pastracker.ViewModels
 
         }
 
-            private void CancelCommandExecute()
+        private void AddCommandExecute()
+        {
+            var p = new NavigationParameters();
+            _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
+        }
+
+        private void EditCommanddExecute()
+        {
+            var p = new NavigationParameters();
+            switch (CurrentMasterType)
+            {
+                case (int)MasterType.Company:
+                    p.Add(nameof(CompanyMaintenanceViewModel.Id), SelectedId);
+                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeMaintenance), p);
+                    break;
+                case (int)MasterType.Branch:
+                    p.Add(nameof(BranchMaintenanceViewModel.Id), SelectedId);
+                    _regionManager.RequestNavigate("ContentRegion", nameof(BranchMaintenance), p);
+                    break;
+                case (int)MasterType.Employee:
+                    p.Add(nameof(EmployeeMaintenanceViewModel.Id), SelectedId);
+                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeMaintenance), p);
+                    break;
+
+            }
+        }
+
+        private void CancelCommandExecute()
         {
             var p = new NavigationParameters();
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);

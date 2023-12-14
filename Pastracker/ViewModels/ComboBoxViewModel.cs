@@ -8,9 +8,9 @@ namespace Pastracker.ViewModels
 {
     public sealed class ComboBoxViewModel
     {
-        public ComboBoxViewModel(int Code, String Name)
+        public ComboBoxViewModel(int Id, String Name)
         {
-            SelectedValue = Code;
+            SelectedValue = Id;
             DisplayMember = Name;
 
         }
