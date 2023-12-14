@@ -13,8 +13,8 @@ using System.Security.Principal;
 
 namespace Pastracker.ViewModels
 {
-	public class DashboardViewModel : BindableBase
-	{
+	public class DashboardViewModel : BindableBase, INavigationAware
+    {
         private readonly IRegionManager _regionManager;
         private ObservableCollection<MoveContent> _moveContents;
         private ObservableCollection<Company> _companies;
@@ -167,5 +167,19 @@ namespace Pastracker.ViewModels
 
         }
 
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            ShowContentDetails(2023);
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
     }
 }

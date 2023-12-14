@@ -17,6 +17,8 @@ namespace Pastracker.Models
         public int BranchId { get; set; }
         [Column("employee_id")]
         public int EmployeeId { get; set; }
+        [Column("employee_name")]
+        public string EmployeeName { get; set; }
 
         [Column("pickup_date")]
         public DateTime PickupDate { get; set; }

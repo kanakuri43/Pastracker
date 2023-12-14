@@ -27,6 +27,7 @@ namespace Pastracker.ViewModels
         private int _companyId;
         private int _branchId;
         private int _employeeId;
+        private string _employeeName;
         private DateTime _pickupDate;
         private string _pickupName;
         private string _pickupTel;
@@ -80,6 +81,11 @@ namespace Pastracker.ViewModels
         {
             get { return _employeeId; }
             set { SetProperty(ref _employeeId, value); }
+        }
+        public string EmployeeName
+        {
+            get { return _employeeName; }
+            set { SetProperty(ref _employeeName, value); }
         }
         public DateTime PickupDate
         {
@@ -236,6 +242,7 @@ namespace Pastracker.ViewModels
                         CompanyId = this.CompanyId,
                         BranchId = this.BranchId,
                         EmployeeId = this.EmployeeId,
+                        EmployeeName = this.EmployeeName,
                         PickupDate = this.PickupDate,
                         PickupName = this.PickupName,
                         PickupTel = this.PickupTel,
@@ -311,19 +318,25 @@ namespace Pastracker.ViewModels
 
         private void ShowMoveContentDetail(int MoveContentId)
         {
-            this.CompanyId = 1;
-            this.BranchId = 1;
-            this.EmployeeId = 1;
-            this.PickupDate = DateTime.Now;
-            this.PickupName = "遠藤憲一";
-            this.PickupTel = "0234-56-7890";
-            this.PickupAddress1 = "山形県酒田市";
-            this.PickupAddress2 = "京田１－９－１";
-            this.DeliveryDate = DateTime.Now;
-            this.DeliveryName = "遠藤憲一";
-            this.DeliveryTel = "0235-56-7890";
-            this.DeliveryAddress1 = "山形県鶴岡市";
-            this.DeliveryAddress2 = "本町１－９－１";
+            using var context = new AppDbContext();
+            var mc = new ObservableCollection<MoveContent>(context.MoveContents
+                                                                .Where(j => j.Id == MoveContentId)
+                                                                .ToList());
+            this.CompanyId = mc[0].CompanyId;
+            this.BranchId = mc[0].BranchId;
+            this.EmployeeId = mc[0].EmployeeId;
+            this.EmployeeName = mc[0].EmployeeName;
+            this.PickupDate = mc[0].PickupDate;
+            this.PickupName = mc[0].PickupName;
+            this.PickupTel = mc[0].PickupTel;
+            this.PickupAddress1 = mc[0].PickupAddress1;
+            this.PickupAddress2 = mc[0].PickupAddress2;
+            this.DeliveryDate = mc[0].DeliveryDate;
+            this.DeliveryName = mc[0].DeliveryName;
+            this.DeliveryTel = mc[0].DeliveryTel;
+            this.DeliveryAddress1 = mc[0].DeliveryAddress1;
+            this.DeliveryAddress2 = mc[0].DeliveryAddress2;
+
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -332,6 +345,7 @@ namespace Pastracker.ViewModels
             // MoveContentIdを受け取った時の処理
             this.CurrentMoveContentId = navigationContext.Parameters.GetValue<int>(nameof(CurrentMoveContentId));
             ShowMoveContentDetail(CurrentMoveContentId);
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

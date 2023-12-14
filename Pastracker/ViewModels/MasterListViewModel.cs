@@ -123,7 +123,7 @@ namespace Pastracker.ViewModels
         private void CancelCommandExecute()
         {
             var p = new NavigationParameters();
-            _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
+            _regionManager.RequestNavigate("ContentRegion", nameof(Dashboard), p);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

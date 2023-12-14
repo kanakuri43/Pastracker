@@ -136,11 +136,11 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Date" Width="100" DisplayMemberBinding="{Binding PickupDate, StringFormat={}{0:yyyy/MM/dd}}" />
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding PickupName}" />
-                    <GridViewColumn Header="From" Width="100" DisplayMemberBinding="{Binding PickupAddress1}" />
-                    <GridViewColumn Header="To" Width="100" DisplayMemberBinding="{Binding DeliveryAddress1}" />
-                    <GridViewColumn Header="Truck" Width="100"  >
+                    <GridViewColumn Header="引取日" Width="100" DisplayMemberBinding="{Binding PickupDate, StringFormat={}{0:yyyy/MM/dd}}" />
+                    <GridViewColumn Header="社員" Width="100" DisplayMemberBinding="{Binding EmployeeName}" />
+                    <GridViewColumn Header="引取" Width="100" DisplayMemberBinding="{Binding PickupAddress1}" />
+                    <GridViewColumn Header="納入" Width="100" DisplayMemberBinding="{Binding DeliveryAddress1}" />
+                    <GridViewColumn Header="車種" Width="100"  >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Price, StringFormat={}{0:#,0}}" HorizontalAlignment="Right"  />
