@@ -9,9 +9,9 @@
             <RowDefinition Height="120"/> <!-- Header -->
             <RowDefinition Height="60"/>    <!-- condition -->
             <RowDefinition Height="20"/>
+            <RowDefinition/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="20"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                   Text="{Binding CurrentMasterName}" 
@@ -49,7 +49,19 @@
 
 
         
-        <StackPanel Grid.Row="3"
+        <ListBox Grid.Row="3"
+                 SelectedValuePath="SelectedValue"
+                 DisplayMemberPath="DisplayMember"
+                 ItemsSource="{Binding FlexMastertList}" 
+                 SelectedValue="{Binding SelectedId}" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <prism:InvokeCommandAction 
+                          Command="{Binding Path=DataContext.MouseDoubleClickCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+        <StackPanel Grid.Row="4"
                   Orientation="Horizontal"
                   >
             <Button Width="40"
@@ -115,18 +127,6 @@
             </Button>
 
         </StackPanel>
-        <ListBox Grid.Row="5"
-                 SelectedValuePath="SelectedValue"
-                 DisplayMemberPath="DisplayMember"
-                 ItemsSource="{Binding FlexMastertList}" 
-                 SelectedValue="{Binding SelectedId}" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <prism:InvokeCommandAction 
-                          Command="{Binding Path=DataContext.MouseDoubleClickCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
 
     </Grid>
 </UserControl>

@@ -150,6 +150,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand AttachmentCommand { get; }
         public DelegateCommand RegisterCommand { get; }
         public DelegateCommand PrintCommand { get; }
+        public DelegateCommand EmployeeSelectionChangedCommand { get; }
 
         public EditorViewModel(IRegionManager regionManager)
         {
@@ -161,6 +162,7 @@ namespace Pastracker.ViewModels
             AttachmentCommand = new DelegateCommand(AttachmentCommandExecute);
             RegisterCommand = new DelegateCommand(RegisterCommandExecute);
             PrintCommand = new DelegateCommand(PrintCommandExecute);
+            EmployeeSelectionChangedCommand = new DelegateCommand(EmployeeSelectionChangedCommandExecute);
 
             // ComboBox
             using (var context = new AppDbContext())
@@ -181,8 +183,21 @@ namespace Pastracker.ViewModels
 
         private void InitializeScreen()
         {
-            this.PickupDate = DateTime.Now;
-            this.DeliveryDate = DateTime.Now;
+
+            this.CompanyId = default(int);
+            this.BranchId = default(int);
+            this.EmployeeId = default(int);
+            this.EmployeeName = default(string);
+            this.PickupDate = default(DateTime);
+            this.PickupName = default(string);
+            this.PickupTel = default(string);
+            this.PickupAddress1 = default(string);
+            this.PickupAddress2 = default(string);
+            this.DeliveryDate = default(DateTime);
+            this.DeliveryName = default(string);
+            this.DeliveryTel = default(string);
+            this.DeliveryAddress1 = default(string);
+            this.DeliveryAddress2 = default(string);
         }
 
         private void CancelCommandExecute()
@@ -236,13 +251,16 @@ namespace Pastracker.ViewModels
             {
                 if (this.CurrentMoveContentId == 0)
                 {
+                    // 社員idから社員名取得
+                    var e = context.Employees.Find(this.EmployeeId);
+
                     // Create
                     var moveContent = new MoveContent
                     {
                         CompanyId = this.CompanyId,
                         BranchId = this.BranchId,
                         EmployeeId = this.EmployeeId,
-                        EmployeeName = this.EmployeeName,
+                        EmployeeName = e.Name,
                         PickupDate = this.PickupDate,
                         PickupName = this.PickupName,
                         PickupTel = this.PickupTel,
@@ -316,26 +334,74 @@ namespace Pastracker.ViewModels
             Process.Start(psi);
         }
 
+        private void EmployeeSelectionChangedCommandExecute()
+        {
+
+            // 選択された社員の最後の明細を取得して、引取り先にセット
+            using var context = new AppDbContext();
+
+            int lastIdOfEmployee = context.MoveContents.Where(s => s.EmployeeId == this.EmployeeId) // 社員フィルタリング
+                                            .OrderByDescending(s => s.PickupDate) // 引取日で降順にソート
+                                            .Select(s => s.Id) 
+                                            .FirstOrDefault(); // 最初の要素（最新の日付）を取得、データがない場合はデフォルト値
+
+            if (lastIdOfEmployee != default(int))
+            {
+                InheritanceMoveContentDetail(lastIdOfEmployee);
+            }
+
+        }
+
+        private void InheritanceMoveContentDetail(int MoveContentId)
+        {
+            using var context = new AppDbContext();
+            var mc = new ObservableCollection<MoveContent>(context.MoveContents
+                                                                .Where(j => j.Id == MoveContentId)
+                                                                .ToList());
+            if (mc.Count > 0)
+            {
+                this.CompanyId = mc[0].CompanyId;
+                this.BranchId = mc[0].BranchId;
+                this.EmployeeId = mc[0].EmployeeId;
+                this.EmployeeName = mc[0].EmployeeName;
+                this.PickupDate = mc[0].DeliveryDate;
+                this.PickupName = mc[0].DeliveryName;
+                this.PickupTel = mc[0].DeliveryTel;
+                this.PickupAddress1 = mc[0].DeliveryAddress1;
+                this.PickupAddress2 = mc[0].DeliveryAddress2;
+                this.DeliveryDate = default(DateTime);
+                this.DeliveryName = default(string);
+                this.DeliveryTel = default(string);
+                this.DeliveryAddress1 = default(string);
+                this.DeliveryAddress2 = default(string);
+
+            }
+
+        }
+
         private void ShowMoveContentDetail(int MoveContentId)
         {
             using var context = new AppDbContext();
             var mc = new ObservableCollection<MoveContent>(context.MoveContents
                                                                 .Where(j => j.Id == MoveContentId)
                                                                 .ToList());
-            this.CompanyId = mc[0].CompanyId;
-            this.BranchId = mc[0].BranchId;
-            this.EmployeeId = mc[0].EmployeeId;
-            this.EmployeeName = mc[0].EmployeeName;
-            this.PickupDate = mc[0].PickupDate;
-            this.PickupName = mc[0].PickupName;
-            this.PickupTel = mc[0].PickupTel;
-            this.PickupAddress1 = mc[0].PickupAddress1;
-            this.PickupAddress2 = mc[0].PickupAddress2;
-            this.DeliveryDate = mc[0].DeliveryDate;
-            this.DeliveryName = mc[0].DeliveryName;
-            this.DeliveryTel = mc[0].DeliveryTel;
-            this.DeliveryAddress1 = mc[0].DeliveryAddress1;
-            this.DeliveryAddress2 = mc[0].DeliveryAddress2;
+            if (mc.Count > 0)
+            {
+                this.CompanyId = mc[0].CompanyId;
+                this.BranchId = mc[0].BranchId;
+                this.EmployeeId = mc[0].EmployeeId;
+                this.EmployeeName = mc[0].EmployeeName;
+                this.PickupDate = mc[0].PickupDate;
+                this.PickupName = mc[0].PickupName;
+                this.PickupTel = mc[0].PickupTel;
+                this.PickupAddress1 = mc[0].PickupAddress1;
+                this.PickupAddress2 = mc[0].PickupAddress2;
+                this.DeliveryDate = mc[0].DeliveryDate;
+                this.DeliveryName = mc[0].DeliveryName;
+                this.DeliveryTel = mc[0].DeliveryTel;
+                this.DeliveryAddress1 = mc[0].DeliveryAddress1;
+                this.DeliveryAddress2 = mc[0].DeliveryAddress2;
+            }
 
         }
 
