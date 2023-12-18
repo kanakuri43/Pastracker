@@ -10,26 +10,29 @@
     </UserControl.Resources>
     <Grid Background="White" Margin="30">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/> <!-- Title -->
+            <RowDefinition Height="50"/> <!-- Title -->
+            <RowDefinition Height="30"/>    <!-- Comment -->
+            <RowDefinition Height="200"/>   <!-- Driver -->
             <RowDefinition Height="30"/>
-            <RowDefinition Height="330"/>
-            <RowDefinition />
+            <RowDefinition />   <!-- Address -->
+            <RowDefinition />   <!-- Items -->
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="作業指示書"
+                   Text="〇〇運送 御中"
                    FontSize="20"/>
 
+        <!-- Comment -->
+        <TextBlock Grid.Row="1" 
+                   TextDecorations="Underline"
+                   Text="ドライバー決まりましたらお知らせください"/>
+
+        
+        <!-- Driver -->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -38,33 +41,164 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="氏名"/>
+            <Border Grid.Row="1" Grid.Column="1" 
+                    BorderBrush="Black" 
+                    BorderThickness="0,0,0,1"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="連絡先"/>
+            <Border Grid.Row="2" Grid.Column="1" 
+                    BorderBrush="Black" 
+                    BorderThickness="0,0,0,1"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="車番"/>
+            <Border Grid.Row="3" Grid.Column="1" 
+                    BorderBrush="Black" 
+                    BorderThickness="0,0,0,1"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="車形状"/>
+            <Border Grid.Row="4" Grid.Column="1" 
+                    BorderBrush="Black" 
+                    BorderThickness="0,0,0,1"/>
+
+
+            <TextBlock Grid.Row="0" Grid.Column="3" 
+                       Text="有限会社 小山運送"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" 
+                       FontSize="12"
+                       Text="〒998-0878 山形県酒田市こあら３丁目１−１"/>
+            <TextBlock Grid.Row="2" Grid.Column="3" 
+                       FontSize="12"
+                       Text="TEL:0234-21-2656  FAX:0234-21-2667"/>
+        </Grid>
+
+        <!-- Address -->
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <Border Grid.Row="0" Grid.Column="0"
+                    Margin="2"
+                    Background="Silver"/>
             <TextBlock Grid.Row="0" Grid.Column="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="引取先"/>
-            <TextBlock Grid.Row="0" Grid.Column="1"
-                       Text="2023/10/20 10:00"/>
-            <TextBlock Grid.Row="1" Grid.Column="1"
-                       Text="阿部寛"/>
-            <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="090-9999-8888"/>
-            <TextBlock Grid.Row="3" Grid.Column="1"
-                       Text="北海道札幌市"/>
-            <TextBlock Grid.Row="4" Grid.Column="1"
-                       Text="１２３"/>
 
-            <TextBlock Grid.Row="6" Grid.Column="0"
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="{Binding PickupDate, StringFormat={}{0:yyyy年MM月dd日(ddd)}, ConverterCulture=ja-JP}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="{Binding PickupName}"/>
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="{Binding PickupTel}"/>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="{Binding PickupAddress1}"/>
+            <TextBlock Grid.Row="4" Grid.Column="1"
+                       Text="{Binding PickupAddress2}"/>
+
+            <Border Grid.Row="0" Grid.Column="2"
+                    Margin="2"
+                    Background="Silver"/>
+            <TextBlock Grid.Row="0" Grid.Column="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
                        Text="納入先"/>
-            <TextBlock Grid.Row="6" Grid.Column="1"
-                       Text="2023/10/20 10:00"/>
-            <TextBlock Grid.Row="7" Grid.Column="1"
-                       Text="阿部寛"/>
-            <TextBlock Grid.Row="8" Grid.Column="1"
-                       Text="090-9999-8888"/>
-            <TextBlock Grid.Row="9" Grid.Column="1"
-                       Text="青森県弘前市"/>
-            <TextBlock Grid.Row="10" Grid.Column="1"
-                       Text="７８９"/>
+            <TextBlock Grid.Row="0" Grid.Column="3"
+                       Text="{Binding DeliveryDate, StringFormat={}{0:yyyy年MM月dd日(ddd)}, ConverterCulture=ja-JP}"/>
+            <TextBlock Grid.Row="1" Grid.Column="3"
+                       Text="{Binding DeliveryName}"/>
+            <TextBlock Grid.Row="2" Grid.Column="3"
+                       Text="{Binding DeliveryTel}"/>
+            <TextBlock Grid.Row="3" Grid.Column="3"
+                       Text="{Binding DeliveryAddress1}"/>
+            <TextBlock Grid.Row="4" Grid.Column="3"
+                       Text="{Binding DeliveryAddress2}"/>
+
+        </Grid>
+
+        <!-- Items -->
+        <Grid Grid.Row="5"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 横罫線 -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,1,0,1"/>
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <!-- 縦罫線 -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="1,0,0,0"/>
+            <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+            <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+            <Border Grid.Row="0" Grid.Column="5" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+            <Border Grid.Row="0" Grid.Column="7" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="布団袋"/>
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="1"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="椅子"/>
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       Text="2"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="ソファ"/>
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="3"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="テーブル"/>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="1"/>
 
         </Grid>
     </Grid>

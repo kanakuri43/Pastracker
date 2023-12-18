@@ -188,12 +188,12 @@ namespace Pastracker.ViewModels
             this.BranchId = default(int);
             this.EmployeeId = default(int);
             this.EmployeeName = default(string);
-            this.PickupDate = default(DateTime);
+            this.PickupDate = DateTime.Now;
             this.PickupName = default(string);
             this.PickupTel = default(string);
             this.PickupAddress1 = default(string);
             this.PickupAddress2 = default(string);
-            this.DeliveryDate = default(DateTime);
+            this.DeliveryDate = DateTime.Now;
             this.DeliveryName = default(string);
             this.DeliveryTel = default(string);
             this.DeliveryAddress1 = default(string);
@@ -293,12 +293,13 @@ namespace Pastracker.ViewModels
                     }
                 }
             }
-            InitializeScreen();
+            //InitializeScreen();
         }
 
         private void PrintCommandExecute()
         {
             ContentPaper contentPaper = new ContentPaper();
+            contentPaper.DataContext = this;
             FixedPage fixedPage = new FixedPage();
             fixedPage.Children.Add(contentPaper);
 
@@ -334,12 +335,35 @@ namespace Pastracker.ViewModels
             Process.Start(psi);
         }
 
+        private void ClearContent()
+        {
+            this.PickupDate = DateTime.Now;
+            this.PickupName = "";
+            this.PickupTel = "";
+            this.PickupAddress1 = "";
+            this.PickupAddress2 = "";
+            this.DeliveryDate = DateTime.Now;
+            this.DeliveryName = "";
+            this.DeliveryTel = "";
+            this.DeliveryAddress1 = "";
+            this.DeliveryAddress2 = "";
+
+        }
+
         private void EmployeeSelectionChangedCommandExecute()
         {
+            // 
+            if(this.CurrentMoveContentId != 0)
+            {
+                return;
+            }
 
-            // 選択された社員の最後の明細を取得して、引取り先にセット
-            using var context = new AppDbContext();
+            // 新規登録時のみ
+            // 選択された社員の引っ越し履歴データがある場合、
+            // 前回の納入先を、引取り先にデフォルト表示
+            ClearContent();
 
+            var context = new AppDbContext();
             int lastIdOfEmployee = context.MoveContents.Where(s => s.EmployeeId == this.EmployeeId) // 社員フィルタリング
                                             .OrderByDescending(s => s.PickupDate) // 引取日で降順にソート
                                             .Select(s => s.Id) 
@@ -349,6 +373,7 @@ namespace Pastracker.ViewModels
             {
                 InheritanceMoveContentDetail(lastIdOfEmployee);
             }
+
 
         }
 
@@ -369,11 +394,11 @@ namespace Pastracker.ViewModels
                 this.PickupTel = mc[0].DeliveryTel;
                 this.PickupAddress1 = mc[0].DeliveryAddress1;
                 this.PickupAddress2 = mc[0].DeliveryAddress2;
-                this.DeliveryDate = default(DateTime);
-                this.DeliveryName = default(string);
-                this.DeliveryTel = default(string);
-                this.DeliveryAddress1 = default(string);
-                this.DeliveryAddress2 = default(string);
+                this.DeliveryDate = DateTime.Now;
+                this.DeliveryName = "";
+                this.DeliveryTel = "";
+                this.DeliveryAddress1 = "";
+                this.DeliveryAddress2 = "";
 
             }
 
