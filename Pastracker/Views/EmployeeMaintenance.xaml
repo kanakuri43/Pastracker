@@ -28,30 +28,30 @@
             </Grid.ColumnDefinitions>
 
 
-            <TextBlock Grid.Row="0" Grid.Column="0" 
+            <TextBlock Grid.Row="1" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="会社" />
-            <ComboBox Grid.Row="0" Grid.Column="1" 
+            <ComboBox Grid.Row="1" Grid.Column="1" 
                       SelectedIndex="0"
                       SelectedValuePath="Id"
                       DisplayMemberPath="Name"
                       ItemsSource="{Binding Companies}" 
                       SelectedValue="{Binding CompanyId}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" 
+            <TextBlock Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="支店" />
-            <ComboBox Grid.Row="1" Grid.Column="1" 
+            <ComboBox Grid.Row="2" Grid.Column="1" 
                       SelectedIndex="0"
                       SelectedValuePath="Id"
                       DisplayMemberPath="Name"
                       ItemsSource="{Binding Branches}" 
                       SelectedValue="{Binding BranchId}"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" 
+            <TextBlock Grid.Row="0" Grid.Column="0" 
                        VerticalAlignment="Center"
                        Text="名前" />
-            <TextBox Grid.Row="2" Grid.Column="1" />
+            <TextBox Grid.Row="0" Grid.Column="1" />
 
 
         </Grid>

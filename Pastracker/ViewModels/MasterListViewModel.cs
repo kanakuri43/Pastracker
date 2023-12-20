@@ -57,7 +57,7 @@ namespace Pastracker.ViewModels
         {
             _regionManager = regionManager;
             AddCommand = new DelegateCommand(AddCommandExecute);
-            EditCommand = new DelegateCommand(EditCommanddExecute);
+            EditCommand = new DelegateCommand(EditCommandExecute);
             CancelCommand = new DelegateCommand(CancelCommandExecute);
         }
 
@@ -99,7 +99,7 @@ namespace Pastracker.ViewModels
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
         }
 
-        private void EditCommanddExecute()
+        private void EditCommandExecute()
         {
             var p = new NavigationParameters();
             switch (CurrentMasterType)
