@@ -11,7 +11,6 @@ namespace Pastracker.Models
     public class AppDbContext : DbContext
     {
         public DbSet<Company> Companies { get; set; }
-        public DbSet<Branch> Branches { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<MoveContent> MoveContents { get; set; }
 

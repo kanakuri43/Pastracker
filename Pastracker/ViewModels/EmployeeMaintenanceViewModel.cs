@@ -60,7 +60,6 @@ namespace Pastracker.ViewModels
                     var e = new Employee
                     {
                         CompanyId = this.CompanyId,
-                        BranchId = this.BranchId,
                         Name = this.Name,
                     };
                     context.Employees.Add(e);
@@ -77,7 +76,6 @@ namespace Pastracker.ViewModels
 
                         e.Id = this.Id;
                         e.CompanyId = this.CompanyId;
-                        e.BranchId = this.BranchId;
                         e.Name = this.Name;
 
                         context.SaveChanges();

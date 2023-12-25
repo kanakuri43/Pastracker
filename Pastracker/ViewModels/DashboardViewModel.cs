@@ -18,7 +18,6 @@ namespace Pastracker.ViewModels
         private readonly IRegionManager _regionManager;
         private ObservableCollection<MoveContent> _moveContents;
         private ObservableCollection<Company> _companies;
-        private ObservableCollection<Branch> _branches;
         private ObservableCollection<Employee> _employees;
         private int _moveContentId;
         private int _companyId;
@@ -49,11 +48,6 @@ namespace Pastracker.ViewModels
         {
             get { return _companies; }
             set { SetProperty(ref _companies, value); }
-        }
-        public ObservableCollection<Branch> Branches
-        {
-            get { return _branches; }
-            set { SetProperty(ref _branches, value); }
         }
         public ObservableCollection<Employee> Employees
         {
@@ -106,7 +100,6 @@ namespace Pastracker.ViewModels
             {
                 // ComboBox
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
-                Branches = new ObservableCollection<Branch>(context.Branches.ToList());
                 Employees = new ObservableCollection<Employee>(context.Employees.ToList());
 
                 MoveContents = new ObservableCollection<MoveContent>(context.MoveContents.ToList());

@@ -21,7 +21,6 @@ namespace Pastracker.ViewModels
     {
         private readonly IRegionManager _regionManager;
         private ObservableCollection<Company> _companies;
-        private ObservableCollection<Branch> _branches;
         private ObservableCollection<Employee> _employees;
         private int _currentMoveContentId;
         private int _companyId;
@@ -51,11 +50,6 @@ namespace Pastracker.ViewModels
         {
             get { return _companies; }
             set { SetProperty(ref _companies, value); }
-        }
-        public ObservableCollection<Branch> Branches
-        {
-            get { return _branches; }
-            set { SetProperty(ref _branches, value); }
         }
         public ObservableCollection<Employee> Employees
         {
@@ -168,7 +162,6 @@ namespace Pastracker.ViewModels
             using (var context = new AppDbContext())
             {
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
-                Branches = new ObservableCollection<Branch>(context.Branches.ToList());
                 Employees = new ObservableCollection<Employee>(context.Employees.ToList());
             }
 
