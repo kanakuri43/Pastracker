@@ -64,17 +64,18 @@ Width="1000"
                             TriggerParameterPath="AddedItems"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-
                 </ComboBox>
+                <TextBlock Grid.Row="1" Grid.Column="2" 
+                           Margin="10,0,0,0"
+                       VerticalAlignment="Center"
+                       Text="TEL: 0123-4567-8900" />
 
                 <Button Grid.Row="0" Grid.Column="2" 
-                    Visibility="Collapsed"
                     Width="30"
                     HorizontalAlignment="Left"
                     Content="..."
                     Command="{Binding CompanyCommand}"/>
                 <Button Grid.Row="1" Grid.Column="2" 
-                    Visibility="Collapsed"
                     Width="30"
                     HorizontalAlignment="Left"
                     Content="..."
@@ -313,16 +314,26 @@ Width="1000"
                          Text="{Binding DeliveryAddress2}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="番地など"/>
-                <TextBlock Grid.Row="5" Grid.Column="3" 
+                <Grid Grid.Row="5" Grid.Column="3" 
+                      Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" 
                            VerticalAlignment="Center"
-                           Text="支店" />
-                <ComboBox Grid.Row="5" Grid.Column="4"
-                          HorizontalAlignment="Left"
-                          Width="100"
-                          SelectedValuePath="Id"
-                          DisplayMemberPath="Name"
-                          ItemsSource="{Binding Branches}" 
-                          SelectedValue="{Binding DestinationBranchId}"/>
+                           Text="距離" />
+                    <Controls:NumericUpDown Grid.Column="1" 
+                                        Minimum="0" Maximum="999"/>
+                    <TextBlock Grid.Column="3" 
+                           VerticalAlignment="Center"
+                           Text="金額" />
+                    <Controls:NumericUpDown Grid.Column="4" 
+                                        Minimum="0" Maximum="999"/>
+                </Grid>
             </Grid>
 
 

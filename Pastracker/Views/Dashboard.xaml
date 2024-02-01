@@ -57,7 +57,9 @@
                         SelectedValuePath="Id"
                         DisplayMemberPath="Name"
                         ItemsSource="{Binding Employees}" 
-                        SelectedValue="{Binding EmployeeId}" mah:TextBoxHelper.UseFloatingWatermark="True">
+                        SelectedValue="{Binding EmployeeId}" 
+                TextSearch.TextPath="Name"
+                mah:TextBoxHelper.UseFloatingWatermark="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <prism:InvokeCommandAction 
@@ -155,6 +157,8 @@
 
                     </GridViewColumn>
                     <GridViewColumn Header="Memo" Width="200" DisplayMemberBinding="{Binding Memo}" />
+                    <GridViewColumn Header="距離" Width="100" DisplayMemberBinding="{Binding EmployeeName}" />
+                    <GridViewColumn Header="金額" Width="100" DisplayMemberBinding="{Binding EmployeeName}" />
 
                 </GridView>
             </ListView.View>

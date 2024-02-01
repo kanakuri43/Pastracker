@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Pastracker.Models;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
 namespace Pastracker.Controls
@@ -40,15 +41,15 @@ namespace Pastracker.Controls
                         // 入力がある都度、即時フィルターをかける。
                         this.Items.Filter += obj =>
                         {
-                            if (!(obj is ComboBoxItem))
+                            if (!(obj is Employee))
                             {
                                 return true;
                             }
 
-                            var item = obj as ComboBoxItem;
-                            if (((string)item.Content).Contains(_textBox.Text))
+                            var item = obj as Employee;
+                            if (item.Name.Contains(_textBox.Text))
                             {
-                                //「選択肢の文字列の中に入力された文字列が含まれる場合」にフィルターを通過させる。
+                                //「PrefectureのNameの中に入力された文字列が含まれる場合」にフィルターを通過させる。
                                 // フィルターを通過すると、展開された選択肢の中に表示される。
                                 return true;
                             }
