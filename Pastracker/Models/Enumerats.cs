@@ -9,7 +9,6 @@ namespace Pastracker.Models
     public enum MasterType
     {
         Company,
-        Branch,
         Employee,
         Truck,
 

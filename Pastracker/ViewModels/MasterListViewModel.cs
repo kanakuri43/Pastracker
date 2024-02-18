@@ -73,9 +73,6 @@ namespace Pastracker.ViewModels
                 case (int)MasterType.Company:
                     CurrentMasterName = @"会社";
                     break;
-                case (int)MasterType.Branch:
-                    CurrentMasterName = @"支店";
-                    break;
                 case (int)MasterType.Employee:
                     CurrentMasterName = @"社員";
                     using (var context = new AppDbContext())
@@ -107,10 +104,6 @@ namespace Pastracker.ViewModels
                 case (int)MasterType.Company:
                     p.Add(nameof(CompanyMaintenanceViewModel.Id), SelectedId);
                     _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeMaintenance), p);
-                    break;
-                case (int)MasterType.Branch:
-                    p.Add(nameof(BranchMaintenanceViewModel.Id), SelectedId);
-                    _regionManager.RequestNavigate("ContentRegion", nameof(BranchMaintenance), p);
                     break;
                 case (int)MasterType.Employee:
                     p.Add(nameof(EmployeeMaintenanceViewModel.Id), SelectedId);

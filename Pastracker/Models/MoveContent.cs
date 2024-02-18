@@ -22,10 +22,6 @@ namespace Pastracker.Models
 
         [Column("pickup_date")]
         public DateTime PickupDate { get; set; }
-        [Column("pickup_name")]
-        public string PickupName { get; set; }
-        [Column("pickup_tel")]
-        public string PickupTel { get; set; }
         [Column("pickup_address1")]
         public string PickupAddress1 { get; set; }
         [Column("pickup_address2")]
@@ -33,10 +29,6 @@ namespace Pastracker.Models
 
         [Column("delivery_date")]
         public DateTime DeliveryDate { get; set; }
-        [Column("delivery_name")]
-        public string DeliveryName { get; set; }
-        [Column("delivery_tel")]
-        public string DeliveryTel { get; set; }
         [Column("delivery_address1")]
         public string DeliveryAddress1 { get; set; }
         [Column("delivery_address2")]

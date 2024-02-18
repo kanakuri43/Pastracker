@@ -22,22 +22,19 @@ namespace Pastracker.ViewModels
         private readonly IRegionManager _regionManager;
         private ObservableCollection<Company> _companies;
         private ObservableCollection<Employee> _employees;
+        private ObservableCollection<Truck> _trucks;
         private int _currentMoveContentId;
         private int _companyId;
         private int _branchId;
         private int _employeeId;
         private string _employeeName;
         private DateTime _pickupDate;
-        private string _pickupName;
-        private string _pickupTel;
         private string _pickupAddress1;
         private string _pickupAddress2;
         private DateTime _deliveryDate;
-        private string _deliveryName;
-        private string _deliveryTel;
         private string _deliveryAddress1;
         private string _deliveryAddress2;
-        private int _destinationBranchId;
+        private int _truckId;
 
         private int[] _years = new int[7];
 
@@ -56,6 +53,11 @@ namespace Pastracker.ViewModels
             get { return _employees; }
             set { SetProperty(ref _employees, value); }
         }
+        public ObservableCollection<Truck> Trucks
+        {
+            get { return _trucks; }
+            set { SetProperty(ref _trucks, value); }
+        }
         public int CurrentMoveContentId
         {
             get { return _currentMoveContentId; }
@@ -65,11 +67,6 @@ namespace Pastracker.ViewModels
         {
             get { return _companyId; }
             set { SetProperty(ref _companyId, value); }
-        }
-        public int BranchId
-        {
-            get { return _branchId; }
-            set { SetProperty(ref _branchId, value); }
         }
         public int EmployeeId
         {
@@ -85,16 +82,6 @@ namespace Pastracker.ViewModels
         {
             get { return _pickupDate; }
             set { SetProperty(ref _pickupDate, value); }
-        }
-        public string PickupName
-        {
-            get { return _pickupName; }
-            set { SetProperty(ref _pickupName, value); }
-        }
-        public string PickupTel
-        {
-            get { return _pickupTel; }
-            set { SetProperty(ref _pickupTel, value); }
         }
         public string PickupAddress1
         {
@@ -112,16 +99,6 @@ namespace Pastracker.ViewModels
             get { return _deliveryDate; }
             set { SetProperty(ref _deliveryDate, value); }
         }
-        public string DeliveryName
-        {
-            get { return _deliveryName; }
-            set { SetProperty(ref _deliveryName, value); }
-        }
-        public string DeliveryTel
-        {
-            get { return _deliveryTel; }
-            set { SetProperty(ref _deliveryTel, value); }
-        }
         public string DeliveryAddress1
         {
             get { return _deliveryAddress1; }
@@ -132,10 +109,10 @@ namespace Pastracker.ViewModels
             get { return _deliveryAddress2; }
             set { SetProperty(ref _deliveryAddress2, value); }
         }
-        public int DestinationBranchId
+        public int TruckId
         {
-            get { return _branchId; }
-            set { SetProperty(ref _branchId, value); }
+            get { return _truckId; }
+            set { SetProperty(ref _truckId, value); }
         }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand CompanyCommand { get; }
@@ -151,7 +128,6 @@ namespace Pastracker.ViewModels
             _regionManager = regionManager;
             CancelCommand = new DelegateCommand(CancelCommandExecute);
             CompanyCommand = new DelegateCommand(CompanyCommandExecute);
-            BranchCommand = new DelegateCommand(BranchCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
             AttachmentCommand = new DelegateCommand(AttachmentCommandExecute);
             RegisterCommand = new DelegateCommand(RegisterCommandExecute);
@@ -163,6 +139,7 @@ namespace Pastracker.ViewModels
             {
                 Companies = new ObservableCollection<Company>(context.Companies.ToList());
                 Employees = new ObservableCollection<Employee>(context.Employees.ToList());
+                Trucks = new ObservableCollection<Truck>(context.Trucks.ToList());
             }
 
             // 年
@@ -178,17 +155,12 @@ namespace Pastracker.ViewModels
         {
 
             this.CompanyId = default(int);
-            this.BranchId = default(int);
             this.EmployeeId = default(int);
             this.EmployeeName = default(string);
             this.PickupDate = DateTime.Now;
-            this.PickupName = default(string);
-            this.PickupTel = default(string);
             this.PickupAddress1 = default(string);
             this.PickupAddress2 = default(string);
             this.DeliveryDate = DateTime.Now;
-            this.DeliveryName = default(string);
-            this.DeliveryTel = default(string);
             this.DeliveryAddress1 = default(string);
             this.DeliveryAddress2 = default(string);
         }
@@ -204,14 +176,6 @@ namespace Pastracker.ViewModels
         {
             var p = new NavigationParameters();
             p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Company);
-            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
-
-        }
-
-        private void BranchCommandExecute()
-        {
-            var p = new NavigationParameters();
-            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Branch);
             _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
 
         }
@@ -235,7 +199,7 @@ namespace Pastracker.ViewModels
 
         private void RegisterCommandExecute()
         {
-            if (this.EmployeeId == 0 || this.BranchId == 0 || this.EmployeeId == 0)
+            if (this.EmployeeId == 0 || this.EmployeeId == 0)
             {
                 return;
             }
@@ -251,17 +215,12 @@ namespace Pastracker.ViewModels
                     var moveContent = new MoveContent
                     {
                         CompanyId = this.CompanyId,
-                        BranchId = this.BranchId,
                         EmployeeId = this.EmployeeId,
                         EmployeeName = e.Name,
                         PickupDate = this.PickupDate,
-                        PickupName = this.PickupName,
-                        PickupTel = this.PickupTel,
                         PickupAddress1 = this.PickupAddress1,
                         PickupAddress2 = this.PickupAddress2,
                         DeliveryDate = this.DeliveryDate,
-                        DeliveryName = this.DeliveryName,
-                        DeliveryTel = this.DeliveryTel,
                         DeliveryAddress1 = this.DeliveryAddress1,
                         DeliveryAddress2 = this.DeliveryAddress2,
                     };
@@ -278,7 +237,6 @@ namespace Pastracker.ViewModels
                     {
 
                         moveContent.CompanyId = this.CompanyId;
-                        moveContent.BranchId = this.BranchId;
                         moveContent.EmployeeId = this.EmployeeId;
                         moveContent.PickupDate = this.PickupDate;
 
@@ -331,13 +289,9 @@ namespace Pastracker.ViewModels
         private void ClearContent()
         {
             this.PickupDate = DateTime.Now;
-            this.PickupName = "";
-            this.PickupTel = "";
             this.PickupAddress1 = "";
             this.PickupAddress2 = "";
             this.DeliveryDate = DateTime.Now;
-            this.DeliveryName = "";
-            this.DeliveryTel = "";
             this.DeliveryAddress1 = "";
             this.DeliveryAddress2 = "";
 
@@ -379,17 +333,12 @@ namespace Pastracker.ViewModels
             if (mc.Count > 0)
             {
                 this.CompanyId = mc[0].CompanyId;
-                this.BranchId = mc[0].BranchId;
                 this.EmployeeId = mc[0].EmployeeId;
                 this.EmployeeName = mc[0].EmployeeName;
                 this.PickupDate = mc[0].DeliveryDate;
-                this.PickupName = mc[0].DeliveryName;
-                this.PickupTel = mc[0].DeliveryTel;
                 this.PickupAddress1 = mc[0].DeliveryAddress1;
                 this.PickupAddress2 = mc[0].DeliveryAddress2;
                 this.DeliveryDate = DateTime.Now;
-                this.DeliveryName = "";
-                this.DeliveryTel = "";
                 this.DeliveryAddress1 = "";
                 this.DeliveryAddress2 = "";
 
@@ -406,17 +355,12 @@ namespace Pastracker.ViewModels
             if (mc.Count > 0)
             {
                 this.CompanyId = mc[0].CompanyId;
-                this.BranchId = mc[0].BranchId;
                 this.EmployeeId = mc[0].EmployeeId;
                 this.EmployeeName = mc[0].EmployeeName;
                 this.PickupDate = mc[0].PickupDate;
-                this.PickupName = mc[0].PickupName;
-                this.PickupTel = mc[0].PickupTel;
                 this.PickupAddress1 = mc[0].PickupAddress1;
                 this.PickupAddress2 = mc[0].PickupAddress2;
                 this.DeliveryDate = mc[0].DeliveryDate;
-                this.DeliveryName = mc[0].DeliveryName;
-                this.DeliveryTel = mc[0].DeliveryTel;
                 this.DeliveryAddress1 = mc[0].DeliveryAddress1;
                 this.DeliveryAddress2 = mc[0].DeliveryAddress2;
             }

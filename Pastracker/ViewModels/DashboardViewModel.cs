@@ -25,6 +25,8 @@ namespace Pastracker.ViewModels
         private int _employeeId;
         private int _year;
         private int _month;
+        private string _employeeCode;
+        private string _employeeName;
 
         private int?[] _years = new int?[7];
         private int?[] _months = new int?[13];
@@ -64,11 +66,6 @@ namespace Pastracker.ViewModels
             get { return _companyId; }
             set { SetProperty(ref _companyId, value); }
         }
-        public int BranchId
-        {
-            get { return _branchId; }
-            set { SetProperty(ref _branchId, value); }
-        }
         public int EmployeeId
         {
             get { return _employeeId; }
@@ -84,17 +81,27 @@ namespace Pastracker.ViewModels
             get { return _month; }
             set { SetProperty(ref _month, value); }
         }
+        public string EmployeeCode
+        {
+            get { return _employeeCode; }
+            set { SetProperty(ref _employeeCode, value); }
+        }
+        public string EmployeeName
+        {
+            get { return _employeeName; }
+            set { SetProperty(ref _employeeName, value); }
+        }
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
             EditorCommand = new DelegateCommand(EditorCommandExecute);
             CompanyCommand = new DelegateCommand(CompanyCommandExecute);
-            BranchCommand = new DelegateCommand(BranchCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
             MoveContentsDoubleClick = new DelegateCommand(MoveContentsDoubleClickDoubleClickExecute);
             EmployeeSelectionChanged = new DelegateCommand<object[]>(EmployeeSelectionChangedExecute);
             YearSelectionChanged = new DelegateCommand<object[]>(YearSelectionChangedExecute);
             MonthSelectionChanged = new DelegateCommand<object[]>(MonthSelectionChangedExecute);
+            EmployeeSearchCommand = new DelegateCommand(EmployeeSearchCommandExecute);
 
             using (var context = new AppDbContext())
             {
@@ -127,6 +134,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand<object[]> EmployeeSelectionChanged { get; }
         public DelegateCommand<object[]> YearSelectionChanged { get; }
         public DelegateCommand<object[]> MonthSelectionChanged { get; }
+        public DelegateCommand EmployeeSearchCommand { get; }
 
         private void EditorCommandExecute()
         {
@@ -139,14 +147,6 @@ namespace Pastracker.ViewModels
         {
             var p = new NavigationParameters();
             p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Company);
-            _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
-
-        }
-
-        private void BranchCommandExecute()
-        {
-            var p = new NavigationParameters();
-            p.Add(nameof(MasterListViewModel.CurrentMasterType), MasterType.Branch);
             _regionManager.RequestNavigate("ContentRegion", nameof(MasterList), p);
 
         }
@@ -221,6 +221,13 @@ namespace Pastracker.ViewModels
             var p = new NavigationParameters();
             p.Add(nameof(EditorViewModel.CurrentMoveContentId), MoveContentId);
             _regionManager.RequestNavigate("ContentRegion", nameof(Editor), p);
+
+        }
+
+        private void EmployeeSearchCommandExecute()
+        {
+            this.EmployeeCode = "0100";
+            this.EmployeeName = "福山雅治";
 
         }
 

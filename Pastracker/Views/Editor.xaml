@@ -226,14 +226,6 @@ Width="1000"
                         <ComboBoxItem Content="50"/>
                     </ComboBox>
                 </StackPanel>
-                <TextBox Grid.Row="1" Grid.Column="1" 
-                         Text="{Binding PickupName}"
-                         Controls:TextBoxHelper.ClearTextButton="true"
-                         Controls:TextBoxHelper.Watermark="氏名"/>
-                <TextBox Grid.Row="2" Grid.Column="1" 
-                         Text="{Binding PickupTel}"
-                         Controls:TextBoxHelper.ClearTextButton="true"
-                         Controls:TextBoxHelper.Watermark="TEL"/>
                 <TextBox Grid.Row="3" Grid.Column="1"
                          Text="{Binding PickupAddress1}"
                          Controls:TextBoxHelper.ClearTextButton="true"
@@ -247,9 +239,13 @@ Width="1000"
                            Text="車両" />
                 <ComboBox Grid.Row="5" Grid.Column="1"
                           HorizontalAlignment="Left"
-                          Width="100">
-                    <ComboBoxItem Content="軽"/>
-                    <ComboBoxItem Content="2t"/>
+                          SelectedIndex="0"
+                          SelectedValuePath="Id"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Trucks}" 
+                          SelectedValue="{Binding TruckId}"
+                          Width="200">
+                    
 
                 </ComboBox> 
 
@@ -298,14 +294,6 @@ Width="1000"
 
                 </StackPanel>
 
-                <TextBox Grid.Row="1" Grid.Column="4"
-                         Text="{Binding DeliveryName}"
-                         Controls:TextBoxHelper.ClearTextButton="true"
-                         Controls:TextBoxHelper.Watermark="氏名"/>
-                <TextBox Grid.Row="2" Grid.Column="4"
-                         Text="{Binding DeliveryTel}"
-                         Controls:TextBoxHelper.ClearTextButton="true"
-                         Controls:TextBoxHelper.Watermark="TEL"/>
                 <TextBox Grid.Row="3" Grid.Column="4"
                          Text="{Binding DeliveryAddress1}"
                          Controls:TextBoxHelper.ClearTextButton="true"
