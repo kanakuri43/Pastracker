@@ -75,11 +75,6 @@ Width="1000"
                     HorizontalAlignment="Left"
                     Content="..."
                     Command="{Binding CompanyCommand}"/>
-                <Button Grid.Row="1" Grid.Column="2" 
-                    Width="30"
-                    HorizontalAlignment="Left"
-                    Content="..."
-                    Command="{Binding BranchCommand}"/>
                 <Button Grid.Row="2" Grid.Column="2" 
                     Visibility="Collapsed"
                     Width="30"

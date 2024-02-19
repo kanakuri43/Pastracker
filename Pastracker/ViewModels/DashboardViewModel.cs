@@ -101,7 +101,7 @@ namespace Pastracker.ViewModels
             EmployeeSelectionChanged = new DelegateCommand<object[]>(EmployeeSelectionChangedExecute);
             YearSelectionChanged = new DelegateCommand<object[]>(YearSelectionChangedExecute);
             MonthSelectionChanged = new DelegateCommand<object[]>(MonthSelectionChangedExecute);
-            EmployeeSearchCommand = new DelegateCommand(EmployeeSearchCommandExecute);
+            SearchEmployeeCommand = new DelegateCommand(SearchEmployeeCommandExecute);
 
             using (var context = new AppDbContext())
             {
@@ -134,7 +134,7 @@ namespace Pastracker.ViewModels
         public DelegateCommand<object[]> EmployeeSelectionChanged { get; }
         public DelegateCommand<object[]> YearSelectionChanged { get; }
         public DelegateCommand<object[]> MonthSelectionChanged { get; }
-        public DelegateCommand EmployeeSearchCommand { get; }
+        public DelegateCommand SearchEmployeeCommand { get; }
 
         private void EditorCommandExecute()
         {
@@ -187,8 +187,17 @@ namespace Pastracker.ViewModels
         {
             try
             {
-                var selectedItem = selectedItems[0];
-                this.Month = (int)selectedItem;
+                if ((string)((System.Windows.Controls.ContentControl)selectedItems[0]).Content != "")
+                {
+                    //var selectedItem = selectedItems[0];
+                    this.Month = int.Parse((string)((System.Windows.Controls.ContentControl)selectedItems[0]).Content);
+
+                }
+                else 
+                { 
+                    this.Month = 0; 
+                }
+
                 ShowContentsList();
             }
             catch
@@ -214,6 +223,19 @@ namespace Pastracker.ViewModels
             //}
 
             //this.MoveContents = new ObservableCollection<MoveContent>(query.ToList());
+
+            // 検索条件
+            int? searchEmployeeID = null; // 検索しない場合はnull
+            int? searchMonth = null;
+
+            // 条件に基づいてデータをフィルタリング
+            this.MoveContents = new ObservableCollection<MoveContent>(context.MoveContents
+                .Where(c =>
+                    (!searchEmployeeID.HasValue || c.EmployeeId == searchEmployeeID.Value) &&
+                    ((c.PickupDate).Year == this.Year) &&
+                    ((this.Month == 0) || (c.PickupDate).Month == this.Month))
+                .OrderBy(c => c.PickupDate));
+
         }
 
         private void MoveContentsDoubleClickDoubleClickExecute()
@@ -224,15 +246,17 @@ namespace Pastracker.ViewModels
 
         }
 
-        private void EmployeeSearchCommandExecute()
+        private void SearchEmployeeCommandExecute()
         {
-            this.EmployeeCode = "0100";
-            this.EmployeeName = "福山雅治";
+            var p = new NavigationParameters();
+            _regionManager.RequestNavigate("ContentRegion", nameof(SearchEmployee), p);
 
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            this.EmployeeId = navigationContext.Parameters.GetValue<int>(nameof(EmployeeId));
+
             ShowContentsList();
         }
 

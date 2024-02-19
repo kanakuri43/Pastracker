@@ -20,7 +20,8 @@ namespace Pastracker
             containerRegistry.RegisterForNavigation<Editor>();
             containerRegistry.RegisterForNavigation<MasterList>();
             containerRegistry.RegisterForNavigation<CompanyMaintenance>();
-            containerRegistry.RegisterForNavigation<EmployeeMaintenance>();
+            containerRegistry.RegisterForNavigation<EmployeeEditor>();
+            containerRegistry.RegisterForNavigation<SearchEmployee>();
         }
     }
 }

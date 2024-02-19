@@ -103,11 +103,11 @@ namespace Pastracker.ViewModels
             {
                 case (int)MasterType.Company:
                     p.Add(nameof(CompanyMaintenanceViewModel.Id), SelectedId);
-                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeMaintenance), p);
+                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeEditor), p);
                     break;
                 case (int)MasterType.Employee:
-                    p.Add(nameof(EmployeeMaintenanceViewModel.Id), SelectedId);
-                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeMaintenance), p);
+                    p.Add(nameof(EmployeeEditorViewModel.Id), SelectedId);
+                    _regionManager.RequestNavigate("ContentRegion", nameof(EmployeeEditor), p);
                     break;
 
             }
