@@ -13,6 +13,7 @@ namespace Pastracker.Models
         public int Id { get; set; }
         [Column("company_id")]
         public int CompanyId { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
     }
 }

@@ -35,6 +35,11 @@ namespace Pastracker.ViewModels
         private string _deliveryAddress1;
         private string _deliveryAddress2;
         private int _truckId;
+        private int _distance;
+        private decimal _amount;
+        private string _slaveName;
+        private string _privateNotes;
+        private string _publicNotes;
 
         private int[] _years = new int[7];
 
@@ -114,6 +119,31 @@ namespace Pastracker.ViewModels
             get { return _truckId; }
             set { SetProperty(ref _truckId, value); }
         }
+        public int Distance
+        {
+            get { return _distance; }
+            set { SetProperty(ref _distance, value); }
+        }
+        public decimal Amount
+        {
+            get { return _amount; }
+            set { SetProperty(ref _amount, value); }
+        }
+        public string SlaveName
+        {
+            get { return _slaveName; }
+            set { SetProperty(ref _slaveName, value); }
+        }
+        public string PrivateNotes
+        {
+            get { return _privateNotes; }
+            set { SetProperty(ref _privateNotes, value); }
+        }
+        public string PublicNotes
+        {
+            get { return _publicNotes; }
+            set { SetProperty(ref _publicNotes, value); }
+        }
         public DelegateCommand CancelCommand { get; }
         public DelegateCommand CompanyCommand { get; }
         public DelegateCommand BranchCommand { get; }
@@ -163,6 +193,8 @@ namespace Pastracker.ViewModels
             this.DeliveryDate = DateTime.Now;
             this.DeliveryAddress1 = default(string);
             this.DeliveryAddress2 = default(string);
+            this.Distance = default(int);
+            this.Amount = default(decimal);
         }
 
         private void CancelCommandExecute()
@@ -206,11 +238,11 @@ namespace Pastracker.ViewModels
 
             using (var context = new AppDbContext())
             {
+                // 社員idから社員名取得
+                var e = context.Employees.Find(this.EmployeeId);
+
                 if (this.CurrentMoveContentId == 0)
                 {
-                    // 社員idから社員名取得
-                    var e = context.Employees.Find(this.EmployeeId);
-
                     // Create
                     var moveContent = new MoveContent
                     {
@@ -223,6 +255,11 @@ namespace Pastracker.ViewModels
                         DeliveryDate = this.DeliveryDate,
                         DeliveryAddress1 = this.DeliveryAddress1,
                         DeliveryAddress2 = this.DeliveryAddress2,
+                        Distance = this.Distance,
+                        Amount = this.Amount,
+                        SlaveName = this.SlaveName,
+                        PrivateNotes = this.PrivateNotes,
+                        PublicNotes = this.PublicNotes,
                     };
                     context.MoveContents.Add(moveContent);
                     context.SaveChanges();
@@ -235,10 +272,20 @@ namespace Pastracker.ViewModels
                     var moveContent = context.MoveContents.FirstOrDefault(p => p.Id == this.CurrentMoveContentId);
                     if (moveContent != null)
                     {
-
                         moveContent.CompanyId = this.CompanyId;
                         moveContent.EmployeeId = this.EmployeeId;
+                        moveContent.EmployeeName = e.Name;
                         moveContent.PickupDate = this.PickupDate;
+                        moveContent.PickupAddress1 = this.PickupAddress1;
+                        moveContent.PickupAddress2 = this.PickupAddress2;
+                        moveContent.DeliveryDate = this.DeliveryDate;
+                        moveContent.DeliveryAddress1 = this.DeliveryAddress1;
+                        moveContent.DeliveryAddress2 = this.DeliveryAddress2;
+                        moveContent.Distance = this.Distance;
+                        moveContent.Amount = this.Amount;
+                        moveContent.SlaveName = this.SlaveName;
+                        moveContent.PrivateNotes = this.PrivateNotes;
+                        moveContent.PublicNotes = this.PublicNotes;
 
                         context.SaveChanges();
                     }
@@ -341,6 +388,7 @@ namespace Pastracker.ViewModels
                 this.DeliveryDate = DateTime.Now;
                 this.DeliveryAddress1 = "";
                 this.DeliveryAddress2 = "";
+                
 
             }
 
@@ -363,6 +411,11 @@ namespace Pastracker.ViewModels
                 this.DeliveryDate = mc[0].DeliveryDate;
                 this.DeliveryAddress1 = mc[0].DeliveryAddress1;
                 this.DeliveryAddress2 = mc[0].DeliveryAddress2;
+                this.Distance = mc[0].Distance;
+                this.Amount = mc[0].Amount;
+                this.SlaveName = mc[0].SlaveName;
+                this.PrivateNotes = mc[0].PrivateNotes;
+                this.PublicNotes = mc[0].PublicNotes;
             }
 
         }

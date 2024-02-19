@@ -27,19 +27,16 @@ namespace Pastracker.ViewModels
         private int _month;
         private string _employeeCode;
         private string _employeeName;
+        private int _selectedDistanceRangeId;
+        private int _minDistance;
+        private int _maxDistance;
 
         private int?[] _years = new int?[7];
-        private int?[] _months = new int?[13];
 
         public int?[] Years
         {
             get { return _years; }
             set { SetProperty(ref _years, value); }
-        }
-        public int?[] Months
-        {
-            get { return _months; }
-            set { SetProperty(ref _months, value); }
         }
         public ObservableCollection<MoveContent> MoveContents
         {
@@ -91,10 +88,15 @@ namespace Pastracker.ViewModels
             get { return _employeeName; }
             set { SetProperty(ref _employeeName, value); }
         }
+        public int SelectedDistanceRangeId
+        {
+            get { return _selectedDistanceRangeId; }
+            set { SetProperty(ref _selectedDistanceRangeId, value); }
+        }
         public DashboardViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            EditorCommand = new DelegateCommand(EditorCommandExecute);
+            EditCommand = new DelegateCommand(EditCommandExecute);
             CompanyCommand = new DelegateCommand(CompanyCommandExecute);
             EmployeeCommand = new DelegateCommand(EmployeeCommandExecute);
             MoveContentsDoubleClick = new DelegateCommand(MoveContentsDoubleClickDoubleClickExecute);
@@ -102,6 +104,7 @@ namespace Pastracker.ViewModels
             YearSelectionChanged = new DelegateCommand<object[]>(YearSelectionChangedExecute);
             MonthSelectionChanged = new DelegateCommand<object[]>(MonthSelectionChangedExecute);
             SearchEmployeeCommand = new DelegateCommand(SearchEmployeeCommandExecute);
+            DistanceRangeSelectionChanged = new DelegateCommand<object[]>(DistanceRangeSelectionChangedExecute);
 
             using (var context = new AppDbContext())
             {
@@ -118,25 +121,25 @@ namespace Pastracker.ViewModels
             {
                 this.Years[i] = (DateTime.Now.Year) - i + 1;
             }
-            this.Months[0] = null;
-            for (int i = 1; i <= 12; i++)
-            {
-                this.Months[i] = i;
-            }
+            this.Year = DateTime.Now.Year;
+
+            _minDistance = 0;
+            _maxDistance = 999999;
+
             ShowContentsList();
 
         }
-        public DelegateCommand EditorCommand { get; }
+        public DelegateCommand EditCommand { get; }
         public DelegateCommand CompanyCommand { get; }
-        public DelegateCommand BranchCommand { get; }
         public DelegateCommand EmployeeCommand { get; }
         public DelegateCommand MoveContentsDoubleClick { get; }
         public DelegateCommand<object[]> EmployeeSelectionChanged { get; }
         public DelegateCommand<object[]> YearSelectionChanged { get; }
         public DelegateCommand<object[]> MonthSelectionChanged { get; }
         public DelegateCommand SearchEmployeeCommand { get; }
+        public DelegateCommand<object[]> DistanceRangeSelectionChanged { get; }
 
-        private void EditorCommandExecute()
+        private void EditCommandExecute()
         {
             // 登録画面表示
             var p = new NavigationParameters();
@@ -187,15 +190,14 @@ namespace Pastracker.ViewModels
         {
             try
             {
-                if ((string)((System.Windows.Controls.ContentControl)selectedItems[0]).Content != "")
+                var month = (string)((System.Windows.Controls.ContentControl)selectedItems[0]).Content;
+                if (month != "")
                 {
-                    //var selectedItem = selectedItems[0];
-                    this.Month = int.Parse((string)((System.Windows.Controls.ContentControl)selectedItems[0]).Content);
-
+                    this.Month = int.Parse(month);
                 }
-                else 
-                { 
-                    this.Month = 0; 
+                else
+                {
+                    this.Month = 0;
                 }
 
                 ShowContentsList();
@@ -205,35 +207,68 @@ namespace Pastracker.ViewModels
 
             }
         }
+        private void DistanceRangeSelectionChangedExecute(object[] selectedItems)
+        {
+            try
+            {
+                switch (SelectedDistanceRangeId)
+                {
+                    case 0:
+                        // すべて
+                        _minDistance = 0;
+                        _maxDistance = 999999;
+                        break;
+                    case 1:
+                        // 0 ～ 99
+                        _minDistance = 0;
+                        _maxDistance = 99;
+                        break;
+                    case 2:
+                        // 100 ～ 199
+                        _minDistance = 100;
+                        _maxDistance = 199;
+                        break;
+                    case 3:
+                        // 200 ～ 299
+                        _minDistance = 200;
+                        _maxDistance = 299;
+                        break;
+                    case 4:
+                        // 300 ～ 399
+                        _minDistance = 300;
+                        _maxDistance = 399;
+                        break;
+                    case 5:
+                        // 400 ～
+                        _minDistance = 400;
+                        _maxDistance = 999999;
+                        break;
+
+                }
+                ShowContentsList();
+            }
+            catch
+            {
+
+            }
+        }
+
 
         private void ShowContentsList()
         {
             using var context = new AppDbContext();
-            this.MoveContents = new ObservableCollection<MoveContent>(context.MoveContents.Where(j => j.EmployeeId == this.EmployeeId).ToList());
-
-            //var query = context.MoveContents.AsQueryable();
-
-            //// 年に基づくフィルタ
-            //query = query.Where(j => j.PickupDate.Year == this.Year);
-
-            //// 月が指定されている場合、その条件を追加
-            //if (this.Month != 0)
-            //{
-            //    query = query.Where(j => j.PickupDate.Month == this.Month);
-            //}
-
-            //this.MoveContents = new ObservableCollection<MoveContent>(query.ToList());
 
             // 検索条件
             int? searchEmployeeID = null; // 検索しない場合はnull
-            int? searchMonth = null;
 
             // 条件に基づいてデータをフィルタリング
             this.MoveContents = new ObservableCollection<MoveContent>(context.MoveContents
                 .Where(c =>
-                    (!searchEmployeeID.HasValue || c.EmployeeId == searchEmployeeID.Value) &&
-                    ((c.PickupDate).Year == this.Year) &&
-                    ((this.Month == 0) || (c.PickupDate).Month == this.Month))
+                    (!searchEmployeeID.HasValue || c.EmployeeId == searchEmployeeID.Value) 
+                    && ((c.PickupDate).Year == this.Year) 
+                    && ((this.Month == 0) || (c.PickupDate).Month == this.Month) 
+                    && ((c.Distance >= _minDistance) && (c.Distance <= _maxDistance))
+                    )
                 .OrderBy(c => c.PickupDate));
 
         }

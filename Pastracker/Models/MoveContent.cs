@@ -36,10 +36,16 @@ namespace Pastracker.Models
 
         [Column("truck_type")]
         public int TruckType { get; set; }
-        [Column("delivery_branch_id")]
-        public int DeliveryBranchId { get; set; }
-        [Column("memo")]
-        public string Memo { get; set; }
+        [Column("distance")]
+        public int Distance { get; set; }
+        [Column("amount")]
+        public decimal Amount { get; set; }
+        [Column("slave_name")]
+        public string SlaveName { get; set; }
+        [Column("private_notes")]
+        public string PrivateNotes { get; set; }
+        [Column("public_notes")]
+        public string PublicNotes { get; set; }
         [Column("document_directory")]
         public string DocumentDirectory { get; set; }
 

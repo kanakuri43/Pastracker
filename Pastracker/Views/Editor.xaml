@@ -10,7 +10,7 @@ Width="1000"
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>    <!-- Header -->
             <RowDefinition Height="10"/>    <!-- spacer -->
-            <RowDefinition Height="450"/>   <!-- Detail -->
+            <RowDefinition Height="550"/>   <!-- Detail -->
             <RowDefinition />            <!-- Footer -->
             <RowDefinition Height="40"/>            <!-- Footer -->
         </Grid.RowDefinitions>
@@ -65,8 +65,7 @@ Width="1000"
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
-                <TextBlock Grid.Row="1" Grid.Column="2" 
-                           Margin="10,0,0,0"
+                <TextBlock Grid.Row="2" Grid.Column="1" 
                        VerticalAlignment="Center"
                        Text="TEL: 0123-4567-8900" />
 
@@ -153,9 +152,11 @@ Width="1000"
         <!--Detail-->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>   <!-- 住所 -->
-                <RowDefinition Height="70"/>   <!-- memo -->
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="120"/>   <!-- 住所 -->
+                <RowDefinition Height="30"/>    <!-- 距離 -->
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="150"/>    <!-- memo -->
+                <RowDefinition Height="10"/>
                 <RowDefinition />                <!-- 荷物 -->
             </Grid.RowDefinitions>
 
@@ -167,7 +168,7 @@ Width="1000"
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -221,28 +222,16 @@ Width="1000"
                         <ComboBoxItem Content="50"/>
                     </ComboBox>
                 </StackPanel>
-                <TextBox Grid.Row="3" Grid.Column="1"
+                <TextBox Grid.Row="1" Grid.Column="1"
                          Text="{Binding PickupAddress1}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="住所"/>
-                <TextBox Grid.Row="4" Grid.Column="1"
+                <TextBox Grid.Row="2" Grid.Column="1"
                          Text="{Binding PickupAddress2}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="番地など"/>
-                <TextBlock Grid.Row="5" Grid.Column="0" 
-                           VerticalAlignment="Center"
-                           Text="車両" />
-                <ComboBox Grid.Row="5" Grid.Column="1"
-                          HorizontalAlignment="Left"
-                          SelectedIndex="0"
-                          SelectedValuePath="Id"
-                          DisplayMemberPath="Name"
-                          ItemsSource="{Binding Trucks}" 
-                          SelectedValue="{Binding TruckId}"
-                          Width="200">
                     
 
-                </ComboBox> 
 
                 <TextBlock Grid.Row="0" Grid.Column="3" 
                            VerticalAlignment="Center"
@@ -289,15 +278,15 @@ Width="1000"
 
                 </StackPanel>
 
-                <TextBox Grid.Row="3" Grid.Column="4"
+                <TextBox Grid.Row="1" Grid.Column="4"
                          Text="{Binding DeliveryAddress1}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="住所"/>
-                <TextBox Grid.Row="4" Grid.Column="4"
+                <TextBox Grid.Row="2" Grid.Column="4"
                          Text="{Binding DeliveryAddress2}"
                          Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="番地など"/>
-                <Grid Grid.Row="5" Grid.Column="3" 
+                <Grid Grid.Row="4" Grid.Column="3" 
                       Grid.ColumnSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50" />
@@ -306,23 +295,59 @@ Width="1000"
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" 
-                           VerticalAlignment="Center"
-                           Text="距離" />
-                    <Controls:NumericUpDown Grid.Column="1" 
-                                        Minimum="0" Maximum="999"/>
-                    <TextBlock Grid.Column="3" 
-                           VerticalAlignment="Center"
-                           Text="金額" />
-                    <Controls:NumericUpDown Grid.Column="4" 
-                                        Minimum="0" Maximum="999"/>
                 </Grid>
             </Grid>
 
 
-            
-            <!--メモ-->
+
+            <!--距離-->
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           VerticalAlignment="Center"
+                           Text="車両" />
+                <ComboBox Grid.Column="1"
+                          SelectedIndex="0"
+                          SelectedValuePath="Id"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding Trucks}" 
+                          SelectedValue="{Binding TruckId}">
+                </ComboBox>
+
+                <TextBlock Grid.Column="3" 
+                           VerticalAlignment="Center"
+                           Text="距離" />
+                <Controls:NumericUpDown Grid.Column="4" 
+                                            Value="{Binding Distance}"
+                                            Minimum="0" Maximum="999999"/>
+                <TextBlock Grid.Column="6" 
+                           VerticalAlignment="Center"
+                           Text="金額" />
+                <Controls:NumericUpDown Grid.Column="7" 
+                                            Value="{Binding Amount}"
+                                            Minimum="0" Maximum="999999"/>
+                <TextBlock Grid.Column="9" 
+                           VerticalAlignment="Center"
+                           Text="発注先" />
+                <TextBox Grid.Column="10"
+                         Text="{Binding SlaveName}"/>
+
+            </Grid>
+
+            <!--メモ-->
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition/>
@@ -332,19 +357,24 @@ Width="1000"
                            VerticalAlignment="Center" 
                            Text="MEMO"/>
                 <TextBox Grid.Column="1" 
-                         Text=""
+                         Text="{Binding PrivateNotes}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalContentAlignment="Top"
                          Margin="0,0,2,0"
-                         Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="社内"/>
                 <TextBox Grid.Column="2" 
-                         Text=""
+                         Text="{Binding PublicNotes}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         VerticalContentAlignment="Top"
                          Margin="2,0,0,0"
-                         Controls:TextBoxHelper.ClearTextButton="true"
                          Controls:TextBoxHelper.Watermark="社外"/>
             </Grid>
             <!--荷物-->
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -354,49 +384,163 @@ Width="1000"
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="75"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="75"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="75"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="75"/>
+
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Text="荷物"/>
 
                 <!--荷物1列目-->
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="布団袋"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="冷蔵庫"/>
                 <Controls:NumericUpDown Grid.Row="0" Grid.Column="2" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="1"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" Text="椅子"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="タンス・チェスト"/>
                 <Controls:NumericUpDown Grid.Row="1" Grid.Column="2" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="0"/>
-                <TextBlock Grid.Row="2" Grid.Column="1" Text="ソファ"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="本棚"/>
                 <Controls:NumericUpDown Grid.Row="2" Grid.Column="2" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
-                <TextBlock Grid.Row="3" Grid.Column="1" Text="ソファ"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="食器棚"/>
                 <Controls:NumericUpDown Grid.Row="3" Grid.Column="2" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
-                <TextBlock Grid.Row="4" Grid.Column="1" Text="ソファ"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="テレビ台"/>
                 <Controls:NumericUpDown Grid.Row="4" Grid.Column="2" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="テーブル・机"/>
+                <Controls:NumericUpDown Grid.Row="5" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="6" Grid.Column="1" Text="ソファー"/>
+                <Controls:NumericUpDown Grid.Row="6" Grid.Column="2" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
                 <!--荷物2列目-->
-                <TextBlock Grid.Row="0" Grid.Column="3" Text="布団袋"/>
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="ベッドS"/>
                 <Controls:NumericUpDown Grid.Row="0" Grid.Column="4" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="1"/>
-                <TextBlock Grid.Row="1" Grid.Column="3" Text="椅子"/>
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="ベッドSD"/>
                 <Controls:NumericUpDown Grid.Row="1" Grid.Column="4" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
-                                        Value="2"/>
-                <TextBlock Grid.Row="2" Grid.Column="3" Text="ソファ"/>
+                                        Value="0"/>
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="ベッドD"/>
                 <Controls:NumericUpDown Grid.Row="2" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="3" Grid.Column="3" Text="マットレスS"/>
+                <Controls:NumericUpDown Grid.Row="3" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="4" Grid.Column="3" Text="マットレスSD"/>
+                <Controls:NumericUpDown Grid.Row="4" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="5" Grid.Column="3" Text="マットレスD"/>
+                <Controls:NumericUpDown Grid.Row="5" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="6" Grid.Column="3" Text="テレビ"/>
+                <Controls:NumericUpDown Grid.Row="6" Grid.Column="4" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <!--荷物3列目-->
+                <TextBlock Grid.Row="0" Grid.Column="5" Text="布団袋"/>
+                <Controls:NumericUpDown Grid.Row="0" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="1"/>
+                <TextBlock Grid.Row="1" Grid.Column="5" Text="カラーボックス"/>
+                <Controls:NumericUpDown Grid.Row="1" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="0"/>
+                <TextBlock Grid.Row="2" Grid.Column="5" Text="衣装ケース（1段）"/>
+                <Controls:NumericUpDown Grid.Row="2" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="3" Grid.Column="5" Text="衣装ケース（多段）"/>
+                <Controls:NumericUpDown Grid.Row="3" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="4" Grid.Column="5" Text="段ボール（大）"/>
+                <Controls:NumericUpDown Grid.Row="4" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="5" Grid.Column="5" Text="段ボール（中）"/>
+                <Controls:NumericUpDown Grid.Row="5" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="6" Grid.Column="5" Text="段ボール（小）"/>
+                <Controls:NumericUpDown Grid.Row="6" Grid.Column="6" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <!--荷物4列目-->
+                <TextBlock Grid.Row="0" Grid.Column="7" Text="椅子"/>
+                <Controls:NumericUpDown Grid.Row="0" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="1"/>
+                <TextBlock Grid.Row="1" Grid.Column="7" Text="座椅子"/>
+                <Controls:NumericUpDown Grid.Row="1" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="2"/>
+                <TextBlock Grid.Row="2" Grid.Column="7" Text="洗濯機"/>
+                <Controls:NumericUpDown Grid.Row="2" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="3" Grid.Column="7" Text="電子レンジ"/>
+                <Controls:NumericUpDown Grid.Row="3" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="1"/>
+                <TextBlock Grid.Row="4" Grid.Column="7" Text="掃除機"/>
+                <Controls:NumericUpDown Grid.Row="4" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="2"/>
+                <TextBlock Grid.Row="5" Grid.Column="7" Text="扇風機"/>
+                <Controls:NumericUpDown Grid.Row="5" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="6" Grid.Column="7" Text="パイプハンガー"/>
+                <Controls:NumericUpDown Grid.Row="6" Grid.Column="8" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <!--荷物5列目-->
+                <TextBlock Grid.Row="0" Grid.Column="9" Text="ストーブ・ヒーター"/>
+                <Controls:NumericUpDown Grid.Row="0" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="1"/>
+                <TextBlock Grid.Row="1" Grid.Column="9" Text="こたつ"/>
+                <Controls:NumericUpDown Grid.Row="1" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="2"/>
+                <TextBlock Grid.Row="2" Grid.Column="9" Text="ガステーブル"/>
+                <Controls:NumericUpDown Grid.Row="2" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="3" Grid.Column="9" Text="照明器具"/>
+                <Controls:NumericUpDown Grid.Row="3" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="1"/>
+                <TextBlock Grid.Row="4" Grid.Column="9" Text="タイヤ"/>
+                <Controls:NumericUpDown Grid.Row="4" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="2"/>
+                <TextBlock Grid.Row="5" Grid.Column="9" Text="洗濯物干し"/>
+                <Controls:NumericUpDown Grid.Row="5" Grid.Column="10" 
+                                        Minimum="0" Maximum="99" Margin="0,0,4,0"
+                                        Value="3"/>
+                <TextBlock Grid.Row="6" Grid.Column="9" Text="物干し竿"/>
+                <Controls:NumericUpDown Grid.Row="6" Grid.Column="10" 
                                         Minimum="0" Maximum="99" Margin="0,0,4,0"
                                         Value="3"/>
             </Grid>
